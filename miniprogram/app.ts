@@ -1,18 +1,17 @@
-// app.ts
+import { setBodyProfile, setStylePreference, setCustomSelection } from "./data/app-state";
+import { defaultBodyProfile, defaultStylePreference, customOptions } from "./data/mock-data";
+
 App<IAppOption>({
   globalData: {},
   onLaunch() {
-    // 展示本地存储能力
-    const logs = wx.getStorageSync('logs') || []
-    logs.unshift(Date.now())
-    wx.setStorageSync('logs', logs)
-
-    // 登录
-    wx.login({
-      success: res => {
-        console.log(res.code)
-        // 发送 res.code 到后台换取 openId, sessionKey, unionId
-      },
-    })
-  },
-})
+    setBodyProfile(defaultBodyProfile);
+    setStylePreference(defaultStylePreference);
+    setCustomSelection({
+      garment: "大衣",
+      fabric: customOptions.fabrics[0].name,
+      color: "深石墨黑",
+      fit: "合体",
+      details: ["暖金纽扣", "半里布"]
+    });
+  }
+});

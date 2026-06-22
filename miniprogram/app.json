@@ -1,7 +1,11 @@
 {
   "pages": [
-    "pages/index/index",
-    "pages/logs/logs"
+    "pages/home/home",
+    "pages/profile/profile",
+    "pages/style-test/style-test",
+    "pages/recommendations/recommendations",
+    "pages/customizer/customizer",
+    "pages/order-confirm/order-confirm"
   ],
   "window": {
     "navigationBarTextStyle": "black",

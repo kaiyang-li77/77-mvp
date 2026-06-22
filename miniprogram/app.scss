@@ -1,4 +1,19 @@
-/**app.wxss**/
+/**app.scss**/
+page {
+  --ink: #1c1917;
+  --ink-2: #44403c;
+  --muted: #78716c;
+  --line: #e7e5e4;
+  --paper: #fafaf9;
+  --panel: #ffffff;
+  --gold: #ca8a04;
+  --gold-soft: #f7e8bc;
+  --radius: 8px;
+  font-family: -apple-system, "PingFang SC", "Microsoft YaHei", Arial, sans-serif;
+  color: var(--ink);
+  background: var(--paper);
+}
+
 .container {
   height: 100%;
   display: flex;
@@ -7,4 +22,110 @@
   justify-content: space-between;
   padding: 200rpx 0;
   box-sizing: border-box;
-} 
+}
+
+.page {
+  min-height: 100vh;
+  background: var(--paper);
+  padding-bottom: 160rpx;
+}
+
+.section-title {
+  margin: 32rpx 0 20rpx;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 28rpx;
+}
+
+.section-title text:first-child {
+  font-size: 30rpx;
+  font-weight: 900;
+}
+
+.section-title text:last-child {
+  font-size: 22rpx;
+  color: var(--gold);
+  font-weight: 800;
+}
+
+.card {
+  background: var(--panel);
+  border: 1rpx solid var(--line);
+  border-radius: var(--radius);
+  box-shadow: 0 12rpx 30rpx rgba(28, 25, 23, 0.05);
+}
+
+.primary-btn, .dark-btn, .ghost-btn {
+  min-height: 88rpx;
+  border-radius: var(--radius);
+  padding: 0 28rpx;
+  font-weight: 800;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12rpx;
+}
+
+.primary-btn {
+  background: var(--gold);
+  color: #fff;
+  border: none;
+}
+
+.dark-btn {
+  background: var(--ink);
+  color: #fff;
+  border: none;
+}
+
+.ghost-btn {
+  background: #fff;
+  color: var(--ink);
+  border: 1rpx solid var(--line);
+}
+
+.tag {
+  min-height: 56rpx;
+  border-radius: 999rpx;
+  border: 1rpx solid var(--line);
+  padding: 10rpx 20rpx;
+  background: #fff;
+  color: var(--ink-2);
+  font-size: 22rpx;
+  font-weight: 800;
+}
+
+.tag.active {
+  border-color: rgba(202, 138, 4, 0.45);
+  background: var(--gold-soft);
+  color: #713f12;
+}
+
+.bottom-bar {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 120rpx;
+  background: rgba(255, 255, 255, 0.92);
+  border-top: 1rpx solid var(--line);
+  padding: 20rpx 28rpx;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20rpx;
+  box-sizing: border-box;
+}
+
+.bar-price text {
+  display: block;
+  font-size: 20rpx;
+  color: var(--muted);
+}
+
+.bar-price text:last-child {
+  font-size: 36rpx;
+  color: var(--ink);
+  font-weight: 900;
+}

@@ -1,0 +1,79 @@
+<navigation-bar title="定制工作台" back="{{true}}"></navigation-bar>
+
+<view class="page customizer-page">
+  <view class="preview">
+    <text class="preview-label">{{selection.garment}} / {{selection.fit}}</text>
+    <view class="preview-swatch" style="background: {{colorMap[selection.color]}}"></view>
+  </view>
+
+  <view class="section-title"><text>衣型</text></view>
+  <view class="tag-list">
+    <text
+      class="tag {{selection.garment === item ? 'active' : ''}}"
+      wx:for="{{options.garmentTypes}}"
+      wx:key="*this"
+      data-value="{{item}}"
+      bindtap="selectGarment"
+    >{{item}}</text>
+  </view>
+
+  <view class="section-title"><text>颜色</text></view>
+  <view class="swatches">
+    <view
+      class="swatch {{selection.color === item ? 'active' : ''}}"
+      wx:for="{{options.colors}}"
+      wx:key="*this"
+      style="background: {{colorMap[item]}}"
+      data-value="{{item}}"
+      bindtap="selectColor"
+    ></view>
+  </view>
+
+  <view class="section-title"><text>版型</text></view>
+  <view class="tag-list">
+    <text
+      class="tag {{selection.fit === item ? 'active' : ''}}"
+      wx:for="{{['修身','合体','宽松','廓形']}}"
+      wx:key="*this"
+      data-value="{{item}}"
+      bindtap="selectFit"
+    >{{item}}</text>
+  </view>
+
+  <view class="section-title"><text>选择毛料</text></view>
+  <view class="fabric-list">
+    <view
+      class="fabric-card {{selection.fabric === item.name ? 'active' : ''}}"
+      wx:for="{{options.fabrics}}"
+      wx:key="name"
+      data-value="{{item.name}}"
+      bindtap="selectFabric"
+    >
+      <view class="texture"></view>
+      <view>
+        <text class="fabric-name">{{item.name}}</text>
+        <text class="fabric-desc">{{item.price > 0 ? '加价 ¥' + item.price : '默认面料'}}</text>
+      </view>
+      <text class="price">{{item.price > 0 ? '+¥' + item.price : '¥0'}}</text>
+    </view>
+  </view>
+
+  <view class="section-title"><text>工艺细节</text></view>
+  <view class="tag-list">
+    <text
+      class="tag {{selection.details.includes(item.name) ? 'active' : ''}}"
+      wx:for="{{options.details}}"
+      wx:key="name"
+      data-value="{{item.name}}"
+      bindtap="toggleDetail"
+    >{{item.name}}</text>
+  </view>
+</view>
+
+<view class="bottom-bar">
+  <view class="bar-price">
+    <text>预计价格</text>
+    <text>¥{{price}}</text>
+  </view>
+  <button class="primary-btn" bindtap="goOrder">加入方案</button>
+</view>

@@ -1,0 +1,47 @@
+<navigation-bar title="77 Atelier" back="{{false}}"></navigation-bar>
+
+<view class="page home-content">
+  <view class="hero-card">
+    <view class="hero-top">
+      <view>
+        <text class="hero-title">你的专属私人衣橱</text>
+        <text class="hero-note">老钱风与轻奢休闲风，一对一匹配身形和个人气质。</text>
+      </view>
+    </view>
+    <view class="hero-actions">
+      <button class="primary-btn" bindtap="goProfile">开始定制</button>
+      <button class="ghost-btn" bindtap="goRecommendations">看案例</button>
+    </view>
+  </view>
+
+  <view class="quick-grid">
+    <view class="quick-card" bindtap="goProfile">
+      <view class="quick-icon">身</view>
+      <text class="quick-title">身材档案</text>
+      <text class="quick-desc">保存尺寸与身型</text>
+    </view>
+    <view class="quick-card" bindtap="goStyleTest">
+      <view class="quick-icon">风</view>
+      <text class="quick-title">风格测试</text>
+      <text class="quick-desc">识别审美偏好</text>
+    </view>
+    <view class="quick-card" bindtap="goCustomizer">
+      <view class="quick-icon">衣</view>
+      <text class="quick-title">我的衣橱</text>
+      <text class="quick-desc">复购和搭配记录</text>
+    </view>
+    <view class="quick-card" bindtap="goRecommendations">
+      <view class="quick-icon">顾</view>
+      <text class="quick-title">预约顾问</text>
+      <text class="quick-desc">线下量体复核</text>
+    </view>
+  </view>
+
+  <view class="brand-service-card">
+    <text class="brand-name">{{brand.name}}</text>
+    <text class="brand-desc">专注高端私人服装定制，拒绝流水线同质化设计，以高品质选材、精细化工艺和专属顾问服务完成全流程定制体验。</text>
+    <view class="mini-tags">
+      <text class="mini-tag" wx:for="{{brand.serviceKeywords}}" wx:key="index">{{item}}</text>
+    </view>
+  </view>
+</view>

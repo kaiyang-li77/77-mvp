@@ -61,10 +61,12 @@ page {
   border-radius: var(--radius);
   padding: 0 28rpx;
   font-weight: 800;
-  display: inline-flex;
+  display: flex;
   align-items: center;
   justify-content: center;
   gap: 12rpx;
+  margin: 0;
+  white-space: nowrap;
 }
 
 .primary-btn {

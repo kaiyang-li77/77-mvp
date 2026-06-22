@@ -33,7 +33,7 @@
   <view class="tag-list">
     <text
       class="tag {{selection.fit === item ? 'active' : ''}}"
-      wx:for="{{['修身','合体','宽松','廓形']}}"
+      wx:for="{{fits}}"
       wx:key="*this"
       data-value="{{item}}"
       bindtap="selectFit"

@@ -72,6 +72,7 @@ export const garmentBasePrice: Record<string, number> = {
 
 export const recommendations = [
   {
+    id: "rec-1",
     name: "老钱风商务套装",
     match: 94,
     price: 3980,
@@ -79,6 +80,7 @@ export const recommendations = [
     reason: "深石墨精纺羊毛大衣，低调克制，适合高净值客户的会议和通勤场景。"
   },
   {
+    id: "rec-2",
     name: "轻奢休闲通勤款",
     match: 89,
     price: 4280,
@@ -86,6 +88,7 @@ export const recommendations = [
     reason: "海军蓝羊绒混纺，软垂感更强，适合高品质日常和周末会面。"
   },
   {
+    id: "rec-3",
     name: "高级度假外套",
     match: 82,
     price: 4560,

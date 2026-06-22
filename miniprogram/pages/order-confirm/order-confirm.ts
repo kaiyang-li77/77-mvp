@@ -15,7 +15,7 @@ Page({
       content: "顾问将在 24 小时内联系你确认尺寸与面料。",
       showCancel: false,
       success: () => {
-        wx.navigateBack({ delta: 5 });
+        wx.reLaunch({ url: "/pages/home/home" });
       }
     });
   },

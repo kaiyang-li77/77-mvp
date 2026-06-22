@@ -1,10 +1,11 @@
 import { getCustomSelection, setCustomSelection } from "../../data/app-state";
-import { customOptions, colorMap } from "../../data/mock-data";
+import { customOptions, colorMap, styleOptions } from "../../data/mock-data";
 import { calculatePrice } from "../../utils/price";
 
 Page({
   data: {
     options: customOptions,
+    fits: styleOptions.fits,
     colorMap,
     selection: getCustomSelection(),
     price: 0

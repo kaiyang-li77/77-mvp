@@ -7,9 +7,9 @@
   </view>
 
   <view
-    class="look-card {{selected.name === item.name ? 'active' : ''}}"
+    class="look-card {{selected.id === item.id ? 'active' : ''}}"
     wx:for="{{list}}"
-    wx:key="name"
+    wx:key="id"
     data-index="{{index}}"
     bindtap="select"
   >

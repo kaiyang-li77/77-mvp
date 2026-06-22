@@ -1,0 +1,93 @@
+<navigation-bar title="身材档案" back="{{true}}"></navigation-bar>
+
+<view class="page profile-page">
+  <view class="profile-summary">
+    <view class="metric">
+      <text class="metric-value">{{profile.height}}</text>
+      <text class="metric-label">身高 cm</text>
+    </view>
+    <view class="metric">
+      <text class="metric-value">{{profile.weight}}</text>
+      <text class="metric-label">体重 kg</text>
+    </view>
+    <view class="metric">
+      <text class="metric-value">{{profile.bodyType}}</text>
+      <text class="metric-label">身型</text>
+    </view>
+  </view>
+
+  <view class="section-title">
+    <text>量体数据</text>
+    <text>编辑</text>
+  </view>
+
+  <view class="form-grid">
+    <view class="field">
+      <text class="field-label">肩宽</text>
+      <input type="digit" value="{{profile.shoulder}}" data-field="shoulder" bindinput="onInput" />
+      <text class="field-unit">cm</text>
+    </view>
+    <view class="field">
+      <text class="field-label">胸围</text>
+      <input type="digit" value="{{profile.chest}}" data-field="chest" bindinput="onInput" />
+      <text class="field-unit">cm</text>
+    </view>
+    <view class="field">
+      <text class="field-label">腰围</text>
+      <input type="digit" value="{{profile.waist}}" data-field="waist" bindinput="onInput" />
+      <text class="field-unit">cm</text>
+    </view>
+    <view class="field">
+      <text class="field-label">臀围</text>
+      <input type="digit" value="{{profile.hip}}" data-field="hip" bindinput="onInput" />
+      <text class="field-unit">cm</text>
+    </view>
+    <view class="field">
+      <text class="field-label">袖长</text>
+      <input type="digit" value="{{profile.sleeve}}" data-field="sleeve" bindinput="onInput" />
+      <text class="field-unit">cm</text>
+    </view>
+    <view class="field">
+      <text class="field-label">裤长</text>
+      <input type="digit" value="{{profile.pantsLength}}" data-field="pantsLength" bindinput="onInput" />
+      <text class="field-unit">cm</text>
+    </view>
+  </view>
+
+  <view class="section-title">
+    <text>身型选择</text>
+  </view>
+  <view class="tag-list">
+    <text
+      class="tag {{profile.bodyType === item ? 'active' : ''}}"
+      wx:for="{{bodyTypes}}"
+      wx:key="*this"
+      data-type="{{item}}"
+      bindtap="selectBodyType"
+    >{{item}}</text>
+  </view>
+
+  <view class="section-title">
+    <text>身高体重</text>
+  </view>
+  <view class="form-grid">
+    <view class="field">
+      <text class="field-label">身高</text>
+      <input type="digit" value="{{profile.height}}" data-field="height" bindinput="onInput" />
+      <text class="field-unit">cm</text>
+    </view>
+    <view class="field">
+      <text class="field-label">体重</text>
+      <input type="digit" value="{{profile.weight}}" data-field="weight" bindinput="onInput" />
+      <text class="field-unit">kg</text>
+    </view>
+  </view>
+</view>
+
+<view class="bottom-bar">
+  <view class="bar-price">
+    <text>档案完整度</text>
+    <text>86%</text>
+  </view>
+  <button class="dark-btn" bindtap="save">保存档案</button>
+</view>

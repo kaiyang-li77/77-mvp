@@ -1,0 +1,72 @@
+.profile-page {
+  padding: 24rpx 28rpx;
+}
+
+.profile-summary {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 16rpx;
+}
+
+.metric {
+  border-radius: var(--radius);
+  background: #fff;
+  border: 1rpx solid var(--line);
+  padding: 20rpx;
+  min-height: 110rpx;
+}
+
+.metric-value {
+  display: block;
+  font-size: 36rpx;
+  font-weight: 900;
+}
+
+.metric-label {
+  display: block;
+  font-size: 20rpx;
+  color: var(--muted);
+  margin-top: 8rpx;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20rpx;
+  padding: 0 28rpx;
+}
+
+.field {
+  background: #fff;
+  border: 1rpx solid var(--line);
+  border-radius: var(--radius);
+  padding: 20rpx;
+  display: flex;
+  align-items: baseline;
+  gap: 10rpx;
+}
+
+.field-label {
+  font-size: 20rpx;
+  color: var(--muted);
+  margin-right: 12rpx;
+}
+
+.field input {
+  flex: 1;
+  font-size: 32rpx;
+  font-weight: 900;
+  min-width: 0;
+}
+
+.field-unit {
+  font-size: 20rpx;
+  color: var(--muted);
+}
+
+.tag-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16rpx;
+  padding: 0 28rpx;
+}

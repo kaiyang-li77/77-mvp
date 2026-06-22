@@ -129,3 +129,15 @@ page {
   color: var(--ink);
   font-weight: 900;
 }
+
+button::after {
+  border: none;
+}
+
+button:active {
+  opacity: 0.85;
+}
+
+input {
+  caret-color: var(--gold);
+}

@@ -1,0 +1,44 @@
+<navigation-bar title="订单确认" back="{{true}}"></navigation-bar>
+
+<view class="page order-page">
+  <view class="order-card">
+    <view class="order-line"><text>定制品类</text><text>{{order.garment}}</text></view>
+    <view class="order-line"><text>面料</text><text>{{order.fabric}}</text></view>
+    <view class="order-line"><text>颜色</text><text>{{order.color}}</text></view>
+    <view class="order-line"><text>版型</text><text>{{order.fit}}</text></view>
+    <view class="order-line"><text>工艺</text><text>{{order.details.join(' / ') || '-'}}</text></view>
+  </view>
+
+  <view class="order-card">
+    <view class="order-line"><text>尺寸档案</text><text>{{order.profile.height}}cm / {{order.profile.weight}}kg / {{order.profile.bodyType}}</text></view>
+    <view class="order-line"><text>预计工期</text><text>18-25 天</text></view>
+  </view>
+
+  <view class="advisor" bindtap="bookAdvisor">
+    <view class="avatar">顾</view>
+    <view>
+      <text class="advisor-title">顾问复核</text>
+      <text class="advisor-desc">支付前由版师检查尺寸和工艺冲突</text>
+    </view>
+  </view>
+
+  <view class="order-card">
+    <view class="order-line"><text>服务机构</text><text>{{brand.name}}</text></view>
+    <view class="order-line"><text>服务标准</text><text>面料甄选 / 版型打磨 / 一对一专属定制</text></view>
+    <view class="order-line"><text>线下量体地址</text><text>{{brand.address}}</text></view>
+  </view>
+
+  <view class="order-card">
+    <view class="order-line"><text>商品金额</text><text>¥{{order.price}}</text></view>
+    <view class="order-line"><text>顾问复核</text><text>¥0</text></view>
+    <view class="order-line"><text>订金支付</text><text>¥{{order.deposit}}</text></view>
+  </view>
+</view>
+
+<view class="bottom-bar">
+  <view class="bar-price">
+    <text>本次支付</text>
+    <text>¥{{order.deposit}}</text>
+  </view>
+  <button class="primary-btn" bindtap="confirm">确认支付</button>
+</view>

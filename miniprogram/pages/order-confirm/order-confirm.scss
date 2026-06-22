@@ -1,0 +1,73 @@
+.order-page {
+  padding: 24rpx 28rpx 160rpx;
+}
+
+.order-card {
+  padding: 24rpx;
+  background: #fff;
+  border: 1rpx solid var(--line);
+  border-radius: var(--radius);
+  margin-bottom: 20rpx;
+}
+
+.order-line {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  min-height: 56rpx;
+  font-size: 24rpx;
+  border-bottom: 1rpx solid var(--line);
+}
+
+.order-line:last-child {
+  border-bottom: 0;
+}
+
+.order-line text:first-child {
+  color: var(--muted);
+}
+
+.order-line text:last-child {
+  font-weight: 800;
+  text-align: right;
+  max-width: 60%;
+}
+
+.advisor {
+  display: flex;
+  align-items: center;
+  gap: 20rpx;
+  padding: 24rpx;
+  background: #fff;
+  border: 1rpx solid var(--line);
+  border-radius: var(--radius);
+  margin-bottom: 20rpx;
+}
+
+.avatar {
+  width: 72rpx;
+  height: 72rpx;
+  border-radius: 50%;
+  background: var(--gold-soft);
+  color: var(--gold);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28rpx;
+  font-weight: 900;
+  flex-shrink: 0;
+}
+
+.advisor-title {
+  display: block;
+  font-size: 26rpx;
+  font-weight: 800;
+  color: var(--ink);
+}
+
+.advisor-desc {
+  display: block;
+  font-size: 22rpx;
+  color: var(--muted);
+  margin-top: 4rpx;
+}

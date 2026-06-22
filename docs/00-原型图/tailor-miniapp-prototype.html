@@ -1,0 +1,1203 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>百分之七十七定制微信小程序高保真原型</title>
+  <style>
+    :root {
+      --ink: #1c1917;
+      --ink-2: #44403c;
+      --muted: #78716c;
+      --line: #e7e5e4;
+      --paper: #fafaf9;
+      --panel: #ffffff;
+      --gold: #ca8a04;
+      --gold-soft: #f7e8bc;
+      --olive: #5f6f52;
+      --wine: #7f1d1d;
+      --navy: #172554;
+      --taupe: #a8a29e;
+      --shadow: 0 24px 70px rgba(28, 25, 23, .14);
+      --radius: 8px;
+      font-family: Inter, "PingFang SC", "Microsoft YaHei", Arial, sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 10% 5%, rgba(202, 138, 4, .12), transparent 28rem),
+        linear-gradient(135deg, #f5f5f4 0%, #e7e5e4 44%, #d6d3d1 100%);
+      min-height: 100dvh;
+    }
+
+    .canvas {
+      width: min(1860px, 100%);
+      margin: 0 auto;
+      padding: 42px 28px 54px;
+    }
+
+    .board-head {
+      display: flex;
+      justify-content: space-between;
+      gap: 28px;
+      align-items: flex-end;
+      margin-bottom: 28px;
+    }
+
+    .brand-block {
+      max-width: 820px;
+    }
+
+    .eyebrow {
+      color: var(--gold);
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+
+    h1, h2, h3, p {
+      margin: 0;
+    }
+
+    h1 {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 44px;
+      line-height: 1.05;
+      font-weight: 600;
+      letter-spacing: 0;
+    }
+
+    .board-head p {
+      color: var(--ink-2);
+      line-height: 1.8;
+      margin-top: 14px;
+      max-width: 760px;
+    }
+
+    .meta-card {
+      width: 300px;
+      background: rgba(255, 255, 255, .78);
+      border: 1px solid rgba(231, 229, 228, .9);
+      border-radius: var(--radius);
+      padding: 16px;
+      box-shadow: 0 16px 45px rgba(28, 25, 23, .08);
+      backdrop-filter: blur(16px);
+    }
+
+    .meta-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      min-height: 32px;
+      color: var(--ink-2);
+      font-size: 13px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .meta-row:last-child {
+      border-bottom: 0;
+    }
+
+    .screens {
+      display: grid;
+      grid-template-columns: repeat(6, 280px);
+      gap: 22px;
+      align-items: start;
+      overflow-x: auto;
+      padding: 6px 4px 28px;
+      overscroll-behavior-x: contain;
+    }
+
+    .phone {
+      width: 280px;
+      height: 608px;
+      border-radius: 34px;
+      background: #0c0a09;
+      padding: 10px;
+      box-shadow: var(--shadow);
+      flex: 0 0 auto;
+    }
+
+    .screen {
+      height: 100%;
+      background: var(--paper);
+      border-radius: 26px;
+      overflow: hidden;
+      position: relative;
+      border: 1px solid rgba(255, 255, 255, .55);
+    }
+
+    .status {
+      height: 30px;
+      padding: 10px 18px 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      color: var(--ink);
+      font-size: 11px;
+      font-weight: 700;
+    }
+
+    .mini-icons {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .pill-dot, .pill-bar {
+      display: block;
+      background: var(--ink);
+      height: 5px;
+      border-radius: 999px;
+    }
+
+    .pill-dot {
+      width: 5px;
+    }
+
+    .pill-bar {
+      width: 16px;
+    }
+
+    .nav {
+      height: 42px;
+      padding: 0 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .nav-title {
+      font-size: 15px;
+      font-weight: 800;
+      color: var(--ink);
+    }
+
+    .nav-actions {
+      display: flex;
+      gap: 6px;
+    }
+
+    .icon-btn {
+      width: 32px;
+      height: 32px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, .78);
+      display: grid;
+      place-items: center;
+    }
+
+    svg {
+      display: block;
+    }
+
+    .content {
+      height: calc(100% - 72px);
+      overflow: hidden;
+      padding: 0 16px 84px;
+    }
+
+    .content.scroll {
+      overflow-y: auto;
+      overscroll-behavior: contain;
+      scrollbar-width: none;
+    }
+
+    .content.scroll::-webkit-scrollbar {
+      display: none;
+    }
+
+    .hero-card {
+      min-height: 218px;
+      border-radius: 18px;
+      background:
+        linear-gradient(145deg, rgba(28, 25, 23, .96), rgba(68, 64, 60, .9)),
+        var(--ink);
+      color: #fff;
+      padding: 18px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-card:after {
+      content: "";
+      position: absolute;
+      inset: auto -30px -46px auto;
+      width: 180px;
+      height: 180px;
+      border-radius: 50%;
+      background: rgba(202, 138, 4, .2);
+      filter: blur(8px);
+    }
+
+    .hero-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero-title {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 27px;
+      line-height: 1.06;
+      font-weight: 600;
+      letter-spacing: 0;
+      max-width: 142px;
+    }
+
+    .hero-note {
+      font-size: 11px;
+      color: rgba(255, 255, 255, .72);
+      margin-top: 10px;
+      line-height: 1.55;
+      max-width: 150px;
+    }
+
+    .garment {
+      position: absolute;
+      right: 8px;
+      bottom: 8px;
+      width: 118px;
+      height: 174px;
+      z-index: 1;
+    }
+
+    .primary-btn, .dark-btn, .ghost-btn {
+      min-height: 44px;
+      border: 0;
+      border-radius: var(--radius);
+      padding: 0 14px;
+      font-weight: 800;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: background .2s ease, color .2s ease, border-color .2s ease;
+      white-space: nowrap;
+    }
+
+    .primary-btn {
+      background: var(--gold);
+      color: #fff;
+    }
+
+    .dark-btn {
+      background: var(--ink);
+      color: #fff;
+    }
+
+    .ghost-btn {
+      background: #fff;
+      color: var(--ink);
+      border: 1px solid var(--line);
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 8px;
+      position: absolute;
+      left: 18px;
+      bottom: 18px;
+      z-index: 2;
+    }
+
+    .quick-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-top: 12px;
+    }
+
+    .quick-card, .data-card, .choice-card, .fabric-card, .look-card, .order-card {
+      background: rgba(255, 255, 255, .9);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: 0 12px 30px rgba(28, 25, 23, .05);
+    }
+
+    .quick-card {
+      min-height: 82px;
+      padding: 12px;
+      cursor: pointer;
+    }
+
+    .quick-icon {
+      width: 28px;
+      height: 28px;
+      border-radius: 999px;
+      background: #f5f5f4;
+      display: grid;
+      place-items: center;
+      color: var(--gold);
+      margin-bottom: 8px;
+    }
+
+    .quick-card strong, .choice-card strong, .fabric-card strong {
+      display: block;
+      font-size: 13px;
+      line-height: 1.2;
+    }
+
+    .quick-card span, .choice-card span, .fabric-card span {
+      display: block;
+      color: var(--muted);
+      font-size: 10px;
+      line-height: 1.45;
+      margin-top: 4px;
+    }
+
+    .brand-service-card {
+      margin-top: 12px;
+      padding: 12px;
+      border-radius: var(--radius);
+      background: #fff;
+      border: 1px solid rgba(202, 138, 4, .28);
+      box-shadow: 0 12px 30px rgba(28, 25, 23, .05);
+    }
+
+    .brand-service-card strong {
+      display: block;
+      font-size: 13px;
+      line-height: 1.3;
+      margin-bottom: 5px;
+    }
+
+    .brand-service-card p {
+      color: var(--muted);
+      font-size: 10px;
+      line-height: 1.55;
+      margin-bottom: 9px;
+    }
+
+    .mini-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .mini-tags span {
+      min-height: 24px;
+      display: inline-flex;
+      align-items: center;
+      border-radius: 999px;
+      background: #fafaf9;
+      border: 1px solid var(--line);
+      color: var(--ink-2);
+      font-size: 10px;
+      font-weight: 800;
+      padding: 5px 8px;
+    }
+
+    .section-title {
+      margin: 16px 0 10px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .section-title h2 {
+      font-size: 16px;
+      font-weight: 900;
+    }
+
+    .section-title span {
+      font-size: 11px;
+      color: var(--gold);
+      font-weight: 800;
+    }
+
+    .profile-summary {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 8px;
+    }
+
+    .metric {
+      border-radius: var(--radius);
+      background: #fff;
+      border: 1px solid var(--line);
+      padding: 10px;
+      min-height: 62px;
+    }
+
+    .metric b {
+      display: block;
+      font-size: 16px;
+    }
+
+    .metric span {
+      color: var(--muted);
+      font-size: 10px;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    .field {
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 10px;
+      min-height: 58px;
+    }
+
+    .field label {
+      display: block;
+      color: var(--muted);
+      font-size: 10px;
+      margin-bottom: 7px;
+    }
+
+    .field div {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 4px;
+      font-weight: 900;
+      font-size: 16px;
+    }
+
+    .field small {
+      color: var(--muted);
+      font-size: 10px;
+      font-weight: 600;
+    }
+
+    .body-map {
+      height: 168px;
+      border-radius: 16px;
+      background: linear-gradient(180deg, #fff, #f5f5f4);
+      border: 1px solid var(--line);
+      display: grid;
+      grid-template-columns: 108px 1fr;
+      gap: 12px;
+      padding: 12px;
+      align-items: center;
+    }
+
+    .tag-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .tag {
+      min-height: 32px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      padding: 8px 10px;
+      background: #fff;
+      color: var(--ink-2);
+      font-size: 11px;
+      font-weight: 800;
+    }
+
+    .tag.active {
+      border-color: rgba(202, 138, 4, .45);
+      background: var(--gold-soft);
+      color: #713f12;
+    }
+
+    .choice-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    .choice-card {
+      min-height: 92px;
+      padding: 12px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .choice-card.active {
+      border-color: rgba(202, 138, 4, .6);
+      box-shadow: inset 0 0 0 1px rgba(202, 138, 4, .2), 0 12px 30px rgba(202, 138, 4, .1);
+    }
+
+    .swatches {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .swatch {
+      width: 36px;
+      height: 36px;
+      border-radius: 999px;
+      border: 3px solid #fff;
+      box-shadow: 0 0 0 1px var(--line);
+    }
+
+    .swatch.active {
+      box-shadow: 0 0 0 2px var(--gold);
+    }
+
+    .customizer {
+      display: grid;
+      grid-template-columns: 92px 1fr;
+      gap: 10px;
+      height: 218px;
+    }
+
+    .tool-tabs {
+      display: grid;
+      gap: 8px;
+    }
+
+    .tool-tab {
+      border-radius: var(--radius);
+      border: 1px solid var(--line);
+      background: #fff;
+      padding: 9px 8px;
+      font-size: 11px;
+      font-weight: 900;
+      color: var(--muted);
+    }
+
+    .tool-tab.active {
+      background: var(--ink);
+      color: #fff;
+      border-color: var(--ink);
+    }
+
+    .preview {
+      border-radius: 16px;
+      background: linear-gradient(155deg, #292524, #57534e);
+      position: relative;
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, .25);
+    }
+
+    .preview .garment {
+      width: 142px;
+      height: 198px;
+      right: 20px;
+      bottom: 8px;
+    }
+
+    .preview-label {
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      color: #fff;
+      font-size: 11px;
+      font-weight: 800;
+      z-index: 2;
+    }
+
+    .fabric-list {
+      display: grid;
+      gap: 8px;
+    }
+
+    .fabric-card {
+      padding: 10px;
+      display: grid;
+      grid-template-columns: 42px 1fr auto;
+      gap: 10px;
+      align-items: center;
+      min-height: 62px;
+    }
+
+    .texture {
+      width: 42px;
+      height: 42px;
+      border-radius: var(--radius);
+      border: 1px solid rgba(28, 25, 23, .12);
+      background-size: 8px 8px;
+    }
+
+    .price {
+      color: var(--gold);
+      font-weight: 900;
+      font-size: 12px;
+    }
+
+    .bottom-bar {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      height: 72px;
+      background: rgba(255, 255, 255, .92);
+      border-top: 1px solid var(--line);
+      backdrop-filter: blur(18px);
+      padding: 10px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    .bar-price span {
+      display: block;
+      font-size: 10px;
+      color: var(--muted);
+      margin-bottom: 2px;
+    }
+
+    .bar-price b {
+      font-size: 18px;
+    }
+
+    .look-card {
+      padding: 12px;
+      min-height: 132px;
+      display: grid;
+      grid-template-columns: 76px 1fr;
+      gap: 12px;
+      margin-bottom: 10px;
+    }
+
+    .look-art {
+      border-radius: var(--radius);
+      background: linear-gradient(180deg, #292524, #78716c);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .mini-garment {
+      position: absolute;
+      inset: 13px 13px auto;
+      height: 86px;
+    }
+
+    .look-card h3 {
+      font-size: 15px;
+      margin-bottom: 6px;
+    }
+
+    .look-card p {
+      color: var(--muted);
+      font-size: 11px;
+      line-height: 1.55;
+      margin-bottom: 8px;
+    }
+
+    .score {
+      display: flex;
+      gap: 6px;
+      align-items: center;
+      color: var(--gold);
+      font-size: 11px;
+      font-weight: 900;
+    }
+
+    .progress {
+      flex: 1;
+      height: 6px;
+      border-radius: 999px;
+      background: #e7e5e4;
+      overflow: hidden;
+    }
+
+    .progress i {
+      display: block;
+      height: 100%;
+      background: var(--gold);
+      border-radius: inherit;
+    }
+
+    .order-card {
+      padding: 12px;
+      margin-bottom: 10px;
+    }
+
+    .order-line {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      min-height: 30px;
+      align-items: center;
+      font-size: 12px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .order-line:last-child {
+      border-bottom: 0;
+    }
+
+    .order-line span {
+      color: var(--muted);
+    }
+
+    .order-line b {
+      text-align: right;
+    }
+
+    .advisor {
+      display: grid;
+      grid-template-columns: 38px 1fr auto;
+      gap: 10px;
+      align-items: center;
+      padding: 12px;
+      border-radius: var(--radius);
+      background: #fff8e1;
+      border: 1px solid #fde68a;
+      margin-bottom: 10px;
+    }
+
+    .avatar {
+      width: 38px;
+      height: 38px;
+      border-radius: 999px;
+      background: var(--ink);
+      display: grid;
+      place-items: center;
+      color: #fff;
+    }
+
+    .advisor strong {
+      display: block;
+      font-size: 12px;
+    }
+
+    .advisor span {
+      display: block;
+      color: #854d0e;
+      font-size: 10px;
+      margin-top: 3px;
+    }
+
+    .switch {
+      width: 42px;
+      height: 24px;
+      border-radius: 999px;
+      background: var(--gold);
+      padding: 3px;
+      display: flex;
+      justify-content: flex-end;
+    }
+
+    .switch i {
+      width: 18px;
+      height: 18px;
+      background: #fff;
+      border-radius: 999px;
+    }
+
+    .tabbar {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      height: 62px;
+      background: rgba(255, 255, 255, .94);
+      border-top: 1px solid var(--line);
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      padding: 7px 8px 6px;
+    }
+
+    .tab {
+      display: grid;
+      place-items: center;
+      gap: 3px;
+      color: var(--muted);
+      font-size: 10px;
+      font-weight: 700;
+    }
+
+    .tab.active {
+      color: var(--gold);
+    }
+
+    .caption {
+      text-align: center;
+      color: rgba(28, 25, 23, .7);
+      font-size: 13px;
+      line-height: 1.7;
+      margin-top: 6px;
+    }
+
+    .home-content .hero-card {
+      min-height: 196px;
+    }
+
+    .home-content .quick-card {
+      min-height: 70px;
+      padding: 10px;
+    }
+
+    .home-content .quick-icon {
+      margin-bottom: 6px;
+    }
+
+    .home-content .brand-service-card p {
+      margin-bottom: 7px;
+    }
+
+    @media (max-width: 760px) {
+      .canvas {
+        padding: 28px 14px 40px;
+      }
+
+      .board-head {
+        display: block;
+      }
+
+      h1 {
+        font-size: 34px;
+      }
+
+      .meta-card {
+        width: 100%;
+        margin-top: 18px;
+      }
+
+      .screens {
+        grid-template-columns: repeat(6, 280px);
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *:before, *:after {
+        transition: none !important;
+        scroll-behavior: auto !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="canvas">
+    <header class="board-head">
+      <div class="brand-block">
+        <div class="eyebrow">WeChat Mini Program Prototype</div>
+        <h1>百分之七十七定制 77 Atelier</h1>
+        <p>深圳市百分之七十七科技有限公司的小程序原型：面向高净值客户，围绕老钱风与轻奢休闲风，完成身材档案、审美偏好、私人定制方案和购买转化。</p>
+      </div>
+      <aside class="meta-card">
+        <div class="meta-row"><span>成立时间</span><strong>2026年5月20日</strong></div>
+        <div class="meta-row"><span>目标客群</span><strong>高净值客户</strong></div>
+        <div class="meta-row"><span>核心转化</span><strong>创建方案到支付</strong></div>
+      </aside>
+    </header>
+
+    <section class="screens" aria-label="微信小程序原型屏幕">
+      <article class="phone" data-screen="首页">
+        <div class="screen">
+          <div class="status"><span>9:41</span><span class="mini-icons"><i class="pill-dot"></i><i class="pill-dot"></i><i class="pill-bar"></i></span></div>
+          <div class="nav">
+            <div class="nav-title">77 Atelier</div>
+            <div class="nav-actions">
+              <div class="icon-btn" aria-label="搜索">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none"><circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="2"/><path d="m16.5 16.5 4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+              </div>
+              <div class="icon-btn" aria-label="用户">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="8" r="4" stroke="currentColor" stroke-width="2"/><path d="M4 21c1.7-4 4.3-6 8-6s6.3 2 8 6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+              </div>
+            </div>
+          </div>
+          <div class="content scroll home-content">
+            <section class="hero-card">
+              <div class="hero-top">
+                <div>
+                  <h2 class="hero-title">你的专属私人衣橱</h2>
+                  <p class="hero-note">老钱风与轻奢休闲风，一对一匹配身形和个人气质。</p>
+                </div>
+              </div>
+              <svg class="garment" viewBox="0 0 120 180" aria-label="定制大衣示意图">
+                <path d="M42 18h36l12 23 17 115c-15 10-79 10-94 0L30 41z" fill="#d6d3d1"/>
+                <path d="M48 19 60 55 72 19" fill="#f5f5f4"/>
+                <path d="M60 55 40 169M60 55l20 114" stroke="#a8a29e" stroke-width="2"/>
+                <circle cx="61" cy="83" r="3" fill="#ca8a04"/><circle cx="61" cy="105" r="3" fill="#ca8a04"/>
+              </svg>
+              <div class="hero-actions">
+                <button class="primary-btn">开始定制</button>
+                <button class="ghost-btn">看案例</button>
+              </div>
+            </section>
+            <div class="quick-grid">
+              <div class="quick-card">
+                <div class="quick-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M7 3h10v18H7z" stroke="currentColor" stroke-width="2"/><path d="M7 8h10M10 3v18" stroke="currentColor" stroke-width="2"/></svg></div>
+                <strong>身材档案</strong><span>保存尺寸与身型</span>
+              </div>
+              <div class="quick-card">
+                <div class="quick-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></div>
+                <strong>风格测试</strong><span>识别审美偏好</span>
+              </div>
+              <div class="quick-card">
+                <div class="quick-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M6 5h12l-2 16H8z" stroke="currentColor" stroke-width="2"/><path d="M9 5a3 3 0 0 1 6 0" stroke="currentColor" stroke-width="2"/></svg></div>
+                <strong>我的衣橱</strong><span>复购和搭配记录</span>
+              </div>
+              <div class="quick-card">
+                <div class="quick-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M12 5v14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></div>
+                <strong>预约顾问</strong><span>线下量体复核</span>
+              </div>
+            </div>
+            <section class="brand-service-card">
+              <strong>深圳市百分之七十七科技有限公司</strong>
+              <p>专注高端私人服装定制，拒绝流水线同质化设计，以高品质选材、精细化工艺和专属顾问服务完成全流程定制体验。</p>
+              <div class="mini-tags">
+                <span>高端私人定制</span>
+                <span>高净值客户</span>
+                <span>老钱风</span>
+                <span>轻奢休闲风</span>
+              </div>
+            </section>
+          </div>
+          <nav class="tabbar">
+            <div class="tab active"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M4 10 12 4l8 6v10H4z" stroke="currentColor" stroke-width="2"/></svg>首页</div>
+            <div class="tab"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M7 3h10v18H7z" stroke="currentColor" stroke-width="2"/></svg>定制</div>
+            <div class="tab"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M5 6h14v13H5zM8 6V4h8v2" stroke="currentColor" stroke-width="2"/></svg>衣橱</div>
+            <div class="tab"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="8" r="4" stroke="currentColor" stroke-width="2"/><path d="M4 21c1.7-4 4.3-6 8-6s6.3 2 8 6" stroke="currentColor" stroke-width="2"/></svg>我的</div>
+          </nav>
+        </div>
+      </article>
+
+      <article class="phone" data-screen="身材档案">
+        <div class="screen">
+          <div class="status"><span>9:41</span><span class="mini-icons"><i class="pill-dot"></i><i class="pill-dot"></i><i class="pill-bar"></i></span></div>
+          <div class="nav"><div class="nav-title">身材档案</div><div class="icon-btn"><svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M12 5v14" stroke="currentColor" stroke-width="2"/></svg></div></div>
+          <div class="content scroll">
+            <div class="profile-summary">
+              <div class="metric"><b>172</b><span>身高 cm</span></div>
+              <div class="metric"><b>61</b><span>体重 kg</span></div>
+              <div class="metric"><b>合体</b><span>版型偏好</span></div>
+            </div>
+            <div class="section-title"><h2>核心尺寸</h2><span>AI 已校验</span></div>
+            <div class="body-map">
+              <svg viewBox="0 0 110 150" aria-label="人体量体线示意">
+                <circle cx="55" cy="18" r="13" fill="#d6d3d1"/>
+                <path d="M36 44c5-10 33-10 38 0l10 72c-14 9-44 9-58 0z" fill="#e7e5e4" stroke="#a8a29e"/>
+                <path d="M27 58h56M31 82h48M38 132h34" stroke="#ca8a04" stroke-width="3" stroke-linecap="round"/>
+                <path d="M36 46 20 92M74 46l16 46" stroke="#a8a29e" stroke-width="6" stroke-linecap="round"/>
+              </svg>
+              <div class="tag-list">
+                <span class="tag active">直筒身型</span>
+                <span class="tag">肩线平直</span>
+                <span class="tag">腰差较小</span>
+                <span class="tag">腿长比例优</span>
+              </div>
+            </div>
+            <div class="section-title"><h2>量体数据</h2><span>编辑</span></div>
+            <div class="form-grid">
+              <div class="field"><label>肩宽</label><div>42<small>cm</small></div></div>
+              <div class="field"><label>胸围</label><div>88<small>cm</small></div></div>
+              <div class="field"><label>腰围</label><div>71<small>cm</small></div></div>
+              <div class="field"><label>臀围</label><div>92<small>cm</small></div></div>
+              <div class="field"><label>袖长</label><div>58<small>cm</small></div></div>
+              <div class="field"><label>裤长</label><div>99<small>cm</small></div></div>
+            </div>
+            <div class="section-title"><h2>采集方式</h2><span>3 选 1</span></div>
+            <div class="tag-list">
+              <span class="tag active">手动输入</span>
+              <span class="tag">上传正侧面照</span>
+              <span class="tag">到店量体</span>
+            </div>
+          </div>
+          <div class="bottom-bar">
+            <div class="bar-price"><span>档案完整度</span><b>86%</b></div>
+            <button class="dark-btn">保存档案</button>
+          </div>
+        </div>
+      </article>
+
+      <article class="phone" data-screen="风格测试">
+        <div class="screen">
+          <div class="status"><span>9:41</span><span class="mini-icons"><i class="pill-dot"></i><i class="pill-dot"></i><i class="pill-bar"></i></span></div>
+          <div class="nav"><div class="nav-title">风格测试</div><div class="nav-actions"><div class="icon-btn"><svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2"/></svg></div></div></div>
+          <div class="content scroll">
+            <div class="section-title"><h2>审美关键词</h2><span>可多选</span></div>
+            <div class="choice-grid">
+              <div class="choice-card active"><strong>老钱风</strong><span>低调、耐看、重面料质感</span></div>
+              <div class="choice-card active"><strong>轻奢休闲风</strong><span>舒适松弛，有高级日常感</span></div>
+              <div class="choice-card"><strong>极简高级</strong><span>少装饰、重剪裁和面料</span></div>
+              <div class="choice-card"><strong>正式晚宴</strong><span>更挺括、有仪式感</span></div>
+            </div>
+            <div class="section-title"><h2>常用颜色</h2><span>偏好排序</span></div>
+            <div class="swatches">
+              <span class="swatch active" style="background:#1c1917"></span>
+              <span class="swatch active" style="background:#172554"></span>
+              <span class="swatch" style="background:#78716c"></span>
+              <span class="swatch" style="background:#7f1d1d"></span>
+              <span class="swatch" style="background:#5f6f52"></span>
+              <span class="swatch" style="background:#d6d3d1"></span>
+            </div>
+            <div class="section-title"><h2>版型偏好</h2><span>影响纸样</span></div>
+            <div class="tag-list">
+              <span class="tag">修身</span>
+              <span class="tag active">合体</span>
+              <span class="tag">宽松</span>
+              <span class="tag">廓形</span>
+            </div>
+            <div class="section-title"><h2>穿着场景</h2><span>推荐权重</span></div>
+            <div class="choice-grid">
+              <div class="choice-card active"><strong>商务通勤</strong><span>每周 3-5 天，要求耐穿</span></div>
+              <div class="choice-card"><strong>婚礼宴会</strong><span>正式感强，拍照出片</span></div>
+              <div class="choice-card active"><strong>周末旅行</strong><span>柔软、易搭配、轻便</span></div>
+              <div class="choice-card"><strong>客户会议</strong><span>压场但不过分张扬</span></div>
+            </div>
+          </div>
+          <div class="bottom-bar">
+            <div class="bar-price"><span>风格匹配</span><b>老钱轻奢</b></div>
+            <button class="dark-btn">生成推荐</button>
+          </div>
+        </div>
+      </article>
+
+      <article class="phone" data-screen="定制工作台">
+        <div class="screen">
+          <div class="status"><span>9:41</span><span class="mini-icons"><i class="pill-dot"></i><i class="pill-dot"></i><i class="pill-bar"></i></span></div>
+          <div class="nav"><div class="nav-title">定制工作台</div><div class="icon-btn"><svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M6 6h12v12H6zM9 9h6v6H9z" stroke="currentColor" stroke-width="2"/></svg></div></div>
+          <div class="content scroll">
+            <section class="customizer">
+              <div class="tool-tabs">
+                <div class="tool-tab active">衣型</div>
+                <div class="tool-tab">毛料</div>
+                <div class="tool-tab">颜色</div>
+                <div class="tool-tab">细节</div>
+              </div>
+              <div class="preview">
+                <div class="preview-label">廓形大衣 A-03</div>
+                <svg class="garment" viewBox="0 0 120 180" aria-label="大衣定制预览">
+                  <path d="M42 18h36l13 24 17 116c-16 9-80 9-96 0L29 42z" fill="#1c1917"/>
+                  <path d="M49 19 60 57 71 19" fill="#fafaf9"/>
+                  <path d="M60 57 39 170M60 57l21 113" stroke="#57534e" stroke-width="2"/>
+                  <circle cx="61" cy="84" r="3" fill="#ca8a04"/><circle cx="61" cy="108" r="3" fill="#ca8a04"/>
+                </svg>
+              </div>
+            </section>
+            <div class="section-title"><h2>选择毛料</h2><span>冬季推荐</span></div>
+            <div class="fabric-list">
+              <div class="fabric-card">
+                <div class="texture" style="background-color:#292524;background-image:linear-gradient(45deg,rgba(255,255,255,.08) 25%,transparent 25%,transparent 50%,rgba(255,255,255,.08) 50%,rgba(255,255,255,.08) 75%,transparent 75%)"></div>
+                <div><strong>精纺羊毛</strong><span>挺括、抗皱、商务通勤</span></div>
+                <div class="price">+¥0</div>
+              </div>
+              <div class="fabric-card">
+                <div class="texture" style="background-color:#57534e;background-image:repeating-linear-gradient(90deg,rgba(255,255,255,.12) 0 1px,transparent 1px 5px)"></div>
+                <div><strong>羊绒混纺</strong><span>柔软保暖，垂坠更自然</span></div>
+                <div class="price">+¥680</div>
+              </div>
+              <div class="fabric-card">
+                <div class="texture" style="background-color:#78716c;background-image:linear-gradient(135deg,rgba(0,0,0,.12) 25%,transparent 25%,transparent 50%,rgba(0,0,0,.12) 50%,rgba(0,0,0,.12) 75%,transparent 75%)"></div>
+                <div><strong>粗花呢</strong><span>复古质感，适合外套</span></div>
+                <div class="price">+¥420</div>
+              </div>
+            </div>
+            <div class="section-title"><h2>工艺细节</h2><span>已选 4 项</span></div>
+            <div class="tag-list">
+              <span class="tag active">暖金纽扣</span>
+              <span class="tag active">半里布</span>
+              <span class="tag">斜插口袋</span>
+              <span class="tag active">姓名刺绣</span>
+            </div>
+          </div>
+          <div class="bottom-bar">
+            <div class="bar-price"><span>预计价格</span><b>¥3,980</b></div>
+            <button class="primary-btn">加入方案</button>
+          </div>
+        </div>
+      </article>
+
+      <article class="phone" data-screen="AI搭配推荐">
+        <div class="screen">
+          <div class="status"><span>9:41</span><span class="mini-icons"><i class="pill-dot"></i><i class="pill-dot"></i><i class="pill-bar"></i></span></div>
+          <div class="nav"><div class="nav-title">AI搭配推荐</div><div class="icon-btn"><svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M12 3 14 9l6 2-6 2-2 8-2-8-6-2 6-2z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg></div></div>
+          <div class="content scroll">
+            <div class="section-title"><h2>为你生成 3 套方案</h2><span>基于档案</span></div>
+            <article class="look-card">
+              <div class="look-art">
+                <svg class="mini-garment" viewBox="0 0 80 100"><path d="M25 8h30l10 80c-12 6-38 6-50 0z" fill="#1c1917"/><path d="M32 9 40 32 48 9" fill="#fafaf9"/><circle cx="40" cy="50" r="2.5" fill="#ca8a04"/></svg>
+              </div>
+              <div>
+                <h3>老钱风商务套装</h3>
+                <p>深石墨精纺羊毛大衣，低调克制，适合高净值客户的会议和通勤场景。</p>
+                <div class="score"><span>匹配 94%</span><div class="progress"><i style="width:94%"></i></div></div>
+              </div>
+            </article>
+            <article class="look-card">
+              <div class="look-art" style="background:linear-gradient(180deg,#172554,#64748b)">
+                <svg class="mini-garment" viewBox="0 0 80 100"><path d="M24 12h32l8 76c-13 6-35 6-48 0z" fill="#172554"/><path d="M30 12 40 36 50 12" fill="#dbeafe"/></svg>
+              </div>
+              <div>
+                <h3>轻奢休闲通勤款</h3>
+                <p>海军蓝羊绒混纺，软垂感更强，适合高品质日常和周末会面。</p>
+                <div class="score"><span>匹配 89%</span><div class="progress"><i style="width:89%"></i></div></div>
+              </div>
+            </article>
+            <article class="look-card">
+              <div class="look-art" style="background:linear-gradient(180deg,#5f6f52,#a8a29e)">
+                <svg class="mini-garment" viewBox="0 0 80 100"><path d="M20 14h40l7 74c-16 6-38 6-54 0z" fill="#5f6f52"/><path d="M30 14 40 38 50 14" fill="#ecfccb"/></svg>
+              </div>
+              <div>
+                <h3>高级度假外套</h3>
+                <p>橄榄绿粗花呢外套，兼顾松弛和辨识度，适合旅行、聚会和拍摄。</p>
+                <div class="score"><span>匹配 82%</span><div class="progress"><i style="width:82%"></i></div></div>
+              </div>
+            </article>
+            <div class="advisor">
+              <div class="avatar"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M12 3 14 9l6 2-6 2-2 8-2-8-6-2 6-2z" stroke="currentColor" stroke-width="2"/></svg></div>
+              <div><strong>AI 建议</strong><span>你的肩线适合保留 1.5cm 活动量</span></div>
+              <div class="switch"><i></i></div>
+            </div>
+          </div>
+          <div class="bottom-bar">
+            <div class="bar-price"><span>已选方案</span><b>老钱风</b></div>
+            <button class="primary-btn">进入订单</button>
+          </div>
+        </div>
+      </article>
+
+      <article class="phone" data-screen="订单确认">
+        <div class="screen">
+          <div class="status"><span>9:41</span><span class="mini-icons"><i class="pill-dot"></i><i class="pill-dot"></i><i class="pill-bar"></i></span></div>
+          <div class="nav"><div class="nav-title">订单确认</div><div class="icon-btn"><svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M6 4h12v16H6zM9 8h6M9 12h6M9 16h3" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></div></div>
+          <div class="content scroll">
+            <div class="order-card">
+              <div class="order-line"><span>定制品类</span><b>廓形大衣 A-03</b></div>
+              <div class="order-line"><span>面料</span><b>精纺羊毛 430g</b></div>
+              <div class="order-line"><span>颜色</span><b>深石墨黑</b></div>
+              <div class="order-line"><span>工艺</span><b>暖金纽扣 / 半里布 / 刺绣</b></div>
+            </div>
+            <div class="order-card">
+              <div class="order-line"><span>尺寸档案</span><b>172cm / 61kg / 直筒</b></div>
+              <div class="order-line"><span>版型偏好</span><b>合体，活动量 1.5cm</b></div>
+              <div class="order-line"><span>预计工期</span><b>18-25 天</b></div>
+            </div>
+            <div class="advisor">
+              <div class="avatar"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="8" r="4" stroke="currentColor" stroke-width="2"/><path d="M5 21c1.4-4 3.8-6 7-6s5.6 2 7 6" stroke="currentColor" stroke-width="2"/></svg></div>
+              <div><strong>顾问复核</strong><span>支付前由版师检查尺寸和工艺冲突</span></div>
+              <div class="switch"><i></i></div>
+            </div>
+            <div class="order-card">
+              <div class="order-line"><span>服务机构</span><b>深圳市百分之七十七科技有限公司</b></div>
+              <div class="order-line"><span>服务标准</span><b>面料甄选 / 版型打磨 / 一对一专属定制</b></div>
+              <div class="order-line"><span>线下量体地址</span><b>深圳南山区中铁南方总部大厦903</b></div>
+            </div>
+            <div class="order-card">
+              <div class="order-line"><span>商品金额</span><b>¥3,980</b></div>
+              <div class="order-line"><span>刺绣服务</span><b>¥120</b></div>
+              <div class="order-line"><span>顾问复核</span><b>¥0</b></div>
+              <div class="order-line"><span>订金支付</span><b>¥1,230</b></div>
+            </div>
+          </div>
+          <div class="bottom-bar">
+            <div class="bar-price"><span>本次支付</span><b>¥1,230</b></div>
+            <button class="primary-btn">确认支付</button>
+          </div>
+        </div>
+      </article>
+    </section>
+    <p class="caption">原型重点：数据采集先行、AI 推荐降低选择成本、定制工作台承接个性化搭配、订单页用顾问复核降低定制服装的下单风险。</p>
+  </main>
+</body>
+</html>

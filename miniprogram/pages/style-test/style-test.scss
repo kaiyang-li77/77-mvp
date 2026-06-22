@@ -1,0 +1,48 @@
+.style-page {
+  padding: 24rpx 28rpx 160rpx;
+}
+
+.choice-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20rpx;
+  padding: 0 28rpx;
+}
+
+.choice-card {
+  min-height: 140rpx;
+  padding: 24rpx;
+  background: rgba(255, 255, 255, 0.9);
+  border: 1rpx solid var(--line);
+  border-radius: var(--radius);
+}
+
+.choice-card.active {
+  border-color: rgba(202, 138, 4, 0.6);
+  background: var(--gold-soft);
+}
+
+.choice-title {
+  display: block;
+  font-size: 28rpx;
+  font-weight: 800;
+}
+
+.swatches {
+  display: flex;
+  gap: 20rpx;
+  flex-wrap: wrap;
+  padding: 0 28rpx;
+}
+
+.swatch {
+  width: 64rpx;
+  height: 64rpx;
+  border-radius: 999rpx;
+  border: 4rpx solid #fff;
+  box-shadow: 0 0 0 1rpx var(--line);
+}
+
+.swatch.active {
+  box-shadow: 0 0 0 4rpx var(--gold);
+}

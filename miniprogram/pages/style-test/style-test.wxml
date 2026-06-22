@@ -1,0 +1,71 @@
+<navigation-bar title="风格测试" back="{{true}}"></navigation-bar>
+
+<view class="page style-page">
+  <view class="section-title">
+    <text>审美关键词</text>
+    <text>可多选</text>
+  </view>
+  <view class="choice-grid">
+    <view
+      class="choice-card {{preference.styles.includes(item) ? 'active' : ''}}"
+      wx:for="{{options.styles}}"
+      wx:key="*this"
+      data-value="{{item}}"
+      bindtap="toggleStyle"
+    >
+      <text class="choice-title">{{item}}</text>
+    </view>
+  </view>
+
+  <view class="section-title">
+    <text>常用颜色</text>
+  </view>
+  <view class="swatches">
+    <view
+      class="swatch {{preference.colors.includes(item) ? 'active' : ''}}"
+      wx:for="{{options.colors}}"
+      wx:key="*this"
+      style="background: {{colorMap[item]}}"
+      data-value="{{item}}"
+      bindtap="toggleColor"
+    ></view>
+  </view>
+
+  <view class="section-title">
+    <text>版型偏好</text>
+    <text>单选</text>
+  </view>
+  <view class="tag-list">
+    <text
+      class="tag {{preference.fit === item ? 'active' : ''}}"
+      wx:for="{{options.fits}}"
+      wx:key="*this"
+      data-value="{{item}}"
+      bindtap="selectFit"
+    >{{item}}</text>
+  </view>
+
+  <view class="section-title">
+    <text>穿着场景</text>
+    <text>可多选</text>
+  </view>
+  <view class="choice-grid">
+    <view
+      class="choice-card {{preference.scenes.includes(item) ? 'active' : ''}}"
+      wx:for="{{options.scenes}}"
+      wx:key="*this"
+      data-value="{{item}}"
+      bindtap="toggleScene"
+    >
+      <text class="choice-title">{{item}}</text>
+    </view>
+  </view>
+</view>
+
+<view class="bottom-bar">
+  <view class="bar-price">
+    <text>风格匹配</text>
+    <text>{{preference.styles.join(' ') || '-'}}</text>
+  </view>
+  <button class="dark-btn" bindtap="generate">生成推荐</button>
+</view>

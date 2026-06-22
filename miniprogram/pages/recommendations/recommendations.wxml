@@ -1,0 +1,42 @@
+<navigation-bar title="AI搭配推荐" back="{{true}}"></navigation-bar>
+
+<view class="page rec-page">
+  <view class="section-title">
+    <text>为你生成 {{list.length}} 套方案</text>
+    <text>基于档案</text>
+  </view>
+
+  <view
+    class="look-card {{selected.name === item.name ? 'active' : ''}}"
+    wx:for="{{list}}"
+    wx:key="name"
+    data-index="{{index}}"
+    bindtap="select"
+  >
+    <view class="look-art"></view>
+    <view class="look-info">
+      <text class="look-name">{{item.name}}</text>
+      <text class="look-reason">{{item.reason}}</text>
+      <view class="score">
+        <text>匹配 {{item.match}}%</text>
+        <view class="progress"><view class="progress-inner" style="width: {{item.match}}%"></view></view>
+      </view>
+    </view>
+  </view>
+
+  <view class="advisor">
+    <view class="avatar">AI</view>
+    <view>
+      <text class="advisor-title">AI 建议</text>
+      <text class="advisor-desc">你的肩线适合保留 1.5cm 活动量</text>
+    </view>
+  </view>
+</view>
+
+<view class="bottom-bar">
+  <view class="bar-price">
+    <text>已选方案</text>
+    <text>{{selected.name}}</text>
+  </view>
+  <button class="primary-btn" bindtap="goCustomizer">进入定制</button>
+</view>

@@ -28,11 +28,11 @@ describe('calculatePrice', () => {
     expect(calculatePrice('suit', 'silk', ['monogram', 'rush'], config)).toBe(70000);
   });
 
-  test('returns 0 for unknown garment', () => {
+  test('falls back to 0 base price for unknown garment', () => {
     expect(calculatePrice('unknown', 'cotton', [], config)).toBe(5000);
   });
 
-  test('returns 0 for unknown fabric', () => {
+  test('falls back to 0 fabric extra for unknown fabric', () => {
     expect(calculatePrice('shirt', 'unknown', [], config)).toBe(10000);
   });
 

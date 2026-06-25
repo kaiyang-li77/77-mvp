@@ -6,7 +6,7 @@
 
 设计原则：
 - 覆盖范围仅限当前 MVP 6 个页面已有的业务功能。
-- 用户识别以**手机号**为主键入口，预留微信 `openid` 字段。
+- 用户识别以**微信 OPENID**为主键入口，手机号授权后补充。
 - 配置类数据（衣型、面料、颜色等）全部入表，支持后台上下架。
 - 偏好多选字段与订单快照使用 `jsonb`，平衡规范性与 MVP 迭代速度。
 - 金额统一使用**整数分**，时间统一使用 `TIMESTAMPTZ`。
@@ -17,7 +17,7 @@
 
 | 模块 | 功能点 | 对应数据库实体 |
 |---|---|---|
-| 用户识别 | 手机号作为用户唯一标识 | `users` |
+| 用户识别 | 微信 OPENID 作为用户唯一标识 | `users` |
 | 身材档案 | 身高、体重、肩宽、胸围、腰围、臀围、袖长、裤长、身型 | `body_profiles` |
 | 风格偏好 | 喜好的风格、颜色、版型、穿着场景 | `style_preferences` |
 | 定制选项配置 | 衣型、面料、工艺细节、颜色、风格标签、场景标签 | `garments`、`fabrics`、`details`、`colors`、`styles`、`scenes` |
@@ -240,7 +240,7 @@ CREATE TABLE orders (
 ```sql
 CREATE TABLE advisor_bookings (
   id              BIGSERIAL PRIMARY KEY,
-  user_id         BIGINT NOT NULL REFERENCES users(id),
+  user_id         BIGINT REFERENCES users(id) ON DELETE SET NULL,
   order_id        BIGINT REFERENCES orders(id),
   booking_type    VARCHAR(32) DEFAULT 'offline_fitting',
   status          VARCHAR(32) DEFAULT 'pending',
@@ -277,7 +277,7 @@ CREATE INDEX idx_orders_snapshot ON orders USING GIN (snapshot);
 
 ## 7. 持久化数据流
 
-1. 小程序首次使用，通过手机号授权创建 `users` 记录。
+1. 小程序首次使用，通过微信 OPENID 自动创建 `users` 记录，手机号授权后补充。
 2. 用户填写/修改身材档案 → 写入 `body_profiles`。
 3. 用户完成风格测试 → 写入 `style_preferences`。
 4. 进入定制工作台时，从配置表读取衣型/面料/颜色/细节/风格/场景。

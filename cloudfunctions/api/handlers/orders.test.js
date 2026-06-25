@@ -57,6 +57,15 @@ describe('orders handler', () => {
     expect(result).toEqual({ success: true, data: order, message: '' });
   });
 
+  test('GET /orders/:id returns 400 for non-numeric id', async () => {
+    const user = { id: 1 };
+    const event = { method: 'GET', pathParams: { id: 'abc' } };
+    const result = await handle(event, {}, user);
+
+    expect(response.error).toHaveBeenCalledWith('Invalid order ID', 400);
+    expect(result).toEqual({ success: false, message: 'Invalid order ID', code: 400, data: undefined });
+  });
+
   test('GET /orders/:id returns 404 when not found', async () => {
     query.mockResolvedValue({ rows: [] });
 
@@ -82,7 +91,7 @@ describe('orders handler', () => {
 
     query
       .mockResolvedValueOnce({ rows: [profile] })   // profile query
-      .mockResolvedValueOnce({ rows: [selection] }) // selection query
+      .mockResolvedValueOnce({ rows: [selection] }) // insert custom_selections
       .mockResolvedValueOnce({ rows: [newOrder] });  // insert order
 
     const user = { id: 1 };
@@ -94,11 +103,16 @@ describe('orders handler', () => {
 
     expect(configHandler.handle).toHaveBeenCalledWith(event, {}, user);
     expect(query).toHaveBeenCalledTimes(3);
+    expect(query).toHaveBeenNthCalledWith(
+      2,
+      expect.stringContaining('INSERT INTO custom_selections'),
+      [1, 'suit', 'wool', 'navy', 'regular', []]
+    );
     expect(response.success).toHaveBeenCalledWith(newOrder);
     expect(result.success).toBe(true);
   });
 
-  test('POST /orders handles missing profile and selection gracefully', async () => {
+  test('POST /orders handles missing profile gracefully', async () => {
     const config = {
       garments: [{ code: 'shirt', base_price: 800 }],
       fabrics: [{ code: 'cotton', extra_price: 0 }],
@@ -106,11 +120,12 @@ describe('orders handler', () => {
     };
     configHandler.handle.mockResolvedValue({ data: config });
 
+    const selection = { id: 21, user_id: 1, garment_code: 'shirt' };
     const newOrder = { id: 101, user_id: 1, total_price: 800, deposit: 248, status: 'pending' };
 
     query
       .mockResolvedValueOnce({ rows: [] })         // no profile
-      .mockResolvedValueOnce({ rows: [] })         // no selection
+      .mockResolvedValueOnce({ rows: [selection] })  // insert custom_selections
       .mockResolvedValueOnce({ rows: [newOrder] });  // insert order
 
     const user = { id: 1 };

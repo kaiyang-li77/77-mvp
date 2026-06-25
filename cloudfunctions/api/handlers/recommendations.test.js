@@ -18,51 +18,40 @@ describe('recommendations handler', () => {
   });
 
   test('GET /recommendations returns active recommendations with items', async () => {
-    const recs = [
-      { id: 1, style_code: 'classic', match_score: 95 },
-      { id: 2, style_code: 'modern', match_score: 80 },
-    ];
-    const items1 = [
-      { id: 101, recommendation_id: 1, garment_name: 'Suit', fabric_name: 'Wool', color_name: 'Navy', hex_value: '#000080' },
-    ];
-    const items2 = [
-      { id: 102, recommendation_id: 2, garment_name: 'Shirt', fabric_name: 'Cotton', color_name: 'White', hex_value: '#ffffff' },
+    const rows = [
+      {
+        id: 1, style_code: 'classic', match_score: 95, is_active: true,
+        style_name: 'Classic',
+        item_id: 101, garment_code: 'suit', fabric_code: 'wool', color_code: 'navy',
+        garment_name: 'Suit', fabric_name: 'Wool', color_name: 'Navy', hex_value: '#000080',
+        display_order: 1,
+      },
+      {
+        id: 2, style_code: 'modern', match_score: 80, is_active: true,
+        style_name: 'Modern',
+        item_id: 102, garment_code: 'shirt', fabric_code: 'cotton', color_code: 'white',
+        garment_name: 'Shirt', fabric_name: 'Cotton', color_name: 'White', hex_value: '#ffffff',
+        display_order: 1,
+      },
     ];
 
-    query
-      .mockResolvedValueOnce({ rows: recs })
-      .mockResolvedValueOnce({ rows: items1 })
-      .mockResolvedValueOnce({ rows: items2 });
+    query.mockResolvedValueOnce({ rows });
 
     const user = { id: 1 };
     const event = { method: 'GET' };
     const result = await handle(event, {}, user);
 
-    expect(query).toHaveBeenCalledTimes(3);
-    expect(query).toHaveBeenNthCalledWith(
-      1,
-      expect.stringContaining('FROM recommendations r')
-    );
-    expect(query).toHaveBeenNthCalledWith(
-      2,
-      expect.stringContaining('FROM recommendation_items ri'),
-      [1]
-    );
-    expect(query).toHaveBeenNthCalledWith(
-      3,
-      expect.stringContaining('FROM recommendation_items ri'),
-      [2]
-    );
+    expect(query).toHaveBeenCalledTimes(1);
     expect(response.success).toHaveBeenCalledWith(
       expect.arrayContaining([
-        expect.objectContaining({ id: 1, items: items1 }),
-        expect.objectContaining({ id: 2, items: items2 }),
+        expect.objectContaining({ id: 1, items: expect.arrayContaining([expect.objectContaining({ id: 101 })]) }),
+        expect.objectContaining({ id: 2, items: expect.arrayContaining([expect.objectContaining({ id: 102 })]) }),
       ])
     );
     expect(result.success).toBe(true);
     expect(result.data).toHaveLength(2);
-    expect(result.data[0].items).toEqual(items1);
-    expect(result.data[1].items).toEqual(items2);
+    expect(result.data[0].items).toHaveLength(1);
+    expect(result.data[1].items).toHaveLength(1);
   });
 
   test('GET /recommendations returns empty array when no recommendations', async () => {
@@ -75,5 +64,14 @@ describe('recommendations handler', () => {
     expect(query).toHaveBeenCalledTimes(1);
     expect(response.success).toHaveBeenCalledWith([]);
     expect(result).toEqual({ success: true, data: [], message: '' });
+  });
+
+  test('unsupported method returns 405', async () => {
+    const user = { id: 1 };
+    const event = { method: 'POST' };
+    const result = await handle(event, {}, user);
+
+    expect(response.error).toHaveBeenCalledWith('Method not allowed', 405);
+    expect(result).toEqual({ success: false, message: 'Method not allowed', code: 405, data: undefined });
   });
 });

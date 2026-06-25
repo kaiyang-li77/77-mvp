@@ -35,7 +35,7 @@ exports.main = async (event, context) => {
     const path = event.path || '/';
     const { basePath, pathParams } = parsePath(path);
 
-    const handler = handlers[basePath] || handlers[path];
+    const handler = handlers[basePath];
     if (!handler) {
       return response.error(`Not found: ${method} ${path}`, 404);
     }

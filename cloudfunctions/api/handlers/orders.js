@@ -73,7 +73,7 @@ async function handle(event, context, user) {
     const { rows } = await query(
       `INSERT INTO orders (order_no, user_id, custom_selection_id, total_price, deposit, status, snapshot, estimated_days)
        VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING *`,
-      [orderNo, user.id, selection.id, totalPrice, deposit, 'pending', JSON.stringify(snapshot), estimated_days]
+      [orderNo, user.id, selection.id, totalPrice, deposit, 'pending', snapshot, estimated_days]
     );
     return response.success(rows[0]);
   }

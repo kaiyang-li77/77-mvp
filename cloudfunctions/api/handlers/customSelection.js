@@ -31,7 +31,7 @@ async function handle(event, context, user) {
         `UPDATE custom_selections
          SET garment_code = $1, fabric_code = $2, color_code = $3, fit = $4, detail_codes = $5, calculated_price = $6, updated_at = now()
          WHERE id = $7 RETURNING *`,
-        [garment_code, fabric_code, color_code, fit, JSON.stringify(detail_codes || []), calculatedPrice, existing[0].id]
+        [garment_code, fabric_code, color_code, fit, detail_codes || [], calculatedPrice, existing[0].id]
       );
       return response.success(rows[0]);
     }
@@ -39,7 +39,7 @@ async function handle(event, context, user) {
     const { rows } = await query(
       `INSERT INTO custom_selections (user_id, garment_code, fabric_code, color_code, fit, detail_codes, calculated_price)
        VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *`,
-      [user.id, garment_code, fabric_code, color_code, fit, JSON.stringify(detail_codes || []), calculatedPrice]
+      [user.id, garment_code, fabric_code, color_code, fit, detail_codes || [], calculatedPrice]
     );
     return response.success(rows[0]);
   }

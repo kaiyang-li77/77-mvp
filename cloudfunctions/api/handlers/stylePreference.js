@@ -24,7 +24,7 @@ async function handle(event, context, user) {
         `UPDATE style_preferences
          SET preferred_styles = $1, preferred_colors = $2, fit = $3, preferred_scenes = $4, updated_at = now()
          WHERE id = $5 RETURNING *`,
-        [JSON.stringify(preferred_styles || []), JSON.stringify(preferred_colors || []), fit, JSON.stringify(preferred_scenes || []), existing[0].id]
+        [preferred_styles || [], preferred_colors || [], fit, preferred_scenes || [], existing[0].id]
       );
       return response.success(rows[0]);
     }
@@ -32,7 +32,7 @@ async function handle(event, context, user) {
     const { rows } = await query(
       `INSERT INTO style_preferences (user_id, preferred_styles, preferred_colors, fit, preferred_scenes)
        VALUES ($1, $2, $3, $4, $5) RETURNING *`,
-      [user.id, JSON.stringify(preferred_styles || []), JSON.stringify(preferred_colors || []), fit, JSON.stringify(preferred_scenes || [])]
+      [user.id, preferred_styles || [], preferred_colors || [], fit, preferred_scenes || []]
     );
     return response.success(rows[0]);
   }

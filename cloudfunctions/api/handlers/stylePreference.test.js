@@ -93,7 +93,7 @@ describe('stylePreference handler', () => {
 
     expect(query).toHaveBeenLastCalledWith(
       expect.stringContaining('INSERT INTO style_preferences'),
-      [1, '[]', '[]', null, '[]']
+      [1, [], [], null, []]
     );
     expect(result.success).toBe(true);
   });

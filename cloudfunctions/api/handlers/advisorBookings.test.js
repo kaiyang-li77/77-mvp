@@ -36,6 +36,44 @@ describe('advisorBookings handler', () => {
     expect(result).toEqual({ success: true, data: booking, message: '' });
   });
 
+  test('POST /advisor-bookings accepts custom booking_type', async () => {
+    const booking = { id: 3, user_id: 1, order_id: null, booking_type: 'online_consultation', status: 'pending', booking_date: null, remark: '' };
+    query.mockResolvedValue({ rows: [booking] });
+
+    const user = { id: 1 };
+    const event = {
+      method: 'POST',
+      body: { booking_type: 'online_consultation' },
+    };
+    const result = await handle(event, {}, user);
+
+    expect(query).toHaveBeenCalledWith(
+      expect.stringContaining('INSERT INTO advisor_bookings'),
+      [1, null, 'online_consultation', 'pending', null, '']
+    );
+    expect(response.success).toHaveBeenCalledWith(booking);
+    expect(result.success).toBe(true);
+  });
+
+  test('POST /advisor-bookings defaults invalid booking_type to offline_fitting', async () => {
+    const booking = { id: 4, user_id: 1, order_id: null, booking_type: 'offline_fitting', status: 'pending', booking_date: null, remark: '' };
+    query.mockResolvedValue({ rows: [booking] });
+
+    const user = { id: 1 };
+    const event = {
+      method: 'POST',
+      body: { booking_type: 'invalid_type' },
+    };
+    const result = await handle(event, {}, user);
+
+    expect(query).toHaveBeenCalledWith(
+      expect.stringContaining('INSERT INTO advisor_bookings'),
+      [1, null, 'offline_fitting', 'pending', null, '']
+    );
+    expect(response.success).toHaveBeenCalledWith(booking);
+    expect(result.success).toBe(true);
+  });
+
   test('POST /advisor-bookings defaults optional fields', async () => {
     const booking = { id: 2, user_id: 1, order_id: null, booking_type: 'offline_fitting', status: 'pending', booking_date: null, remark: '' };
     query.mockResolvedValue({ rows: [booking] });

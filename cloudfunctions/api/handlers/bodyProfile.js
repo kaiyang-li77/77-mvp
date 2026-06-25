@@ -32,8 +32,8 @@ async function handle(event, context, user) {
     }
 
     const { rows } = await query(
-      `INSERT INTO body_profiles (user_id, ${FIELDS.join(', ')})
-       VALUES ($1, ${FIELDS.map((_, i) => `$${i + 2}`).join(', ')})
+      `INSERT INTO body_profiles (user_id, is_default, ${FIELDS.join(', ')})
+       VALUES ($1, true, ${FIELDS.map((_, i) => `$${i + 2}`).join(', ')})
        RETURNING *`,
       [user.id, ...values]
     );

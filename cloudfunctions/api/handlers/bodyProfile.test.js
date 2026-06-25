@@ -67,6 +67,10 @@ describe('bodyProfile handler', () => {
     const result = await handle(event, {}, user);
 
     expect(query).toHaveBeenCalledTimes(2);
+    expect(query).toHaveBeenLastCalledWith(
+      expect.stringContaining('INSERT INTO body_profiles'),
+      [1, 180, 75, 45, 100, 80, 95, 60, 105, 'athletic']
+    );
     expect(response.success).toHaveBeenCalledWith(
       expect.objectContaining({ id: 2, height: 180, weight: 75 })
     );

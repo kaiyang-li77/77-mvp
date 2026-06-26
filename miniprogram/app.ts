@@ -4,6 +4,11 @@ import { defaultBodyProfile, defaultStylePreference, customOptions } from "./dat
 App<IAppOption>({
   globalData: {},
   onLaunch() {
+    wx.cloud.init({
+      env: '你的云环境ID',
+      traceUser: true
+    });
+
     if (!wx.getStorageSync("bodyProfile")) {
       setBodyProfile(defaultBodyProfile);
     }

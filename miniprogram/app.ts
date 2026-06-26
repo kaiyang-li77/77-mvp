@@ -5,6 +5,7 @@ App<IAppOption>({
   globalData: {},
   onLaunch() {
     wx.cloud.init({
+      // TODO: 替换为你的微信云开发环境 ID
       env: '你的云环境ID',
       traceUser: true
     });

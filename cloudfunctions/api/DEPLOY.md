@@ -25,12 +25,14 @@ This document describes how to deploy the `api` cloud function to WeChat Cloud D
 
 | Variable | Value | Notes |
 |----------|-------|-------|
-| `PG_HOST` | `sh-postgres-67q2skv6.sql.tencentcdb.com` | PostgreSQL host |
+| `PG_HOST` | `your-db-host.sql.tencentcdb.com` | PostgreSQL host |
 | `PG_PORT` | `22652` | PostgreSQL port |
-| `PG_USER` | `kycloud2` | Database username |
-| `PG_PASSWORD` | `Kycloud123.` | Database password |
-| `PG_DATABASE` | `postgres` | Database name |
+| `PG_USER` | `your_db_user` | Database username |
+| `PG_PASSWORD` | `your_db_password` | Database password |
+| `PG_DATABASE` | `your_database` | Database name |
 | `PG_SSL` | `false` | **Must be `false` for this host** — the remote PostgreSQL instance does not support SSL |
+
+> **Security:** Do not commit real credentials to git. Use the WeChat Cloud Development console to set these values securely.
 
 **Critical:** Set `PG_SSL=false`. The database host does not support SSL connections. Setting this to `true` will cause connection failures.
 

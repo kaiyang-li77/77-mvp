@@ -1,6 +1,6 @@
 import { customOptions, garmentBasePrice } from "../data/mock-data";
 
-export function calculatePrice(
+export function calculatePriceSync(
   garment: string,
   fabric: string,
   details: string[]
@@ -13,4 +13,12 @@ export function calculatePrice(
     return sum + ((item && item.price) || 0);
   }, 0);
   return base + fabricPrice + detailsPrice;
+}
+
+export async function calculatePrice(
+  garment: string,
+  fabric: string,
+  details: string[]
+): Promise<number> {
+  return calculatePriceSync(garment, fabric, details);
 }

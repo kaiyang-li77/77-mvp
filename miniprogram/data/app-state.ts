@@ -1,66 +1,78 @@
-import {
-  defaultBodyProfile,
-  defaultStylePreference,
-  recommendations,
-  customOptions
-} from "./mock-data";
-import { calculatePrice } from "../utils/price";
+import { call } from '../utils/cloud-api';
 
-const KEYS = {
-  bodyProfile: "bodyProfile",
-  stylePreference: "stylePreference",
-  selectedRecommendation: "selectedRecommendation",
-  customSelection: "customSelection"
-};
-
-export function getBodyProfile() {
-  return wx.getStorageSync(KEYS.bodyProfile) || defaultBodyProfile;
+export interface BodyProfile {
+  height: number;
+  weight: number;
+  shoulder: number;
+  chest: number;
+  waist: number;
+  hip: number;
+  sleeve: number;
+  pants_length: number;
+  body_type: string;
 }
 
-export function setBodyProfile(profile: typeof defaultBodyProfile) {
-  wx.setStorageSync(KEYS.bodyProfile, profile);
+export interface StylePreference {
+  preferred_styles: string[];
+  preferred_colors: string[];
+  fit: string;
+  preferred_scenes: string[];
 }
 
-export function getStylePreference() {
-  return wx.getStorageSync(KEYS.stylePreference) || defaultStylePreference;
+export interface CustomSelection {
+  garment_code: string;
+  fabric_code: string;
+  color_code: string;
+  fit: string;
+  detail_codes: string[];
+  calculated_price: number;
 }
 
-export function setStylePreference(pref: typeof defaultStylePreference) {
-  wx.setStorageSync(KEYS.stylePreference, pref);
+export async function getBodyProfile(): Promise<BodyProfile | null> {
+  return call('GET', '/body-profile');
 }
 
-export function getSelectedRecommendation() {
-  return wx.getStorageSync(KEYS.selectedRecommendation) || recommendations[0];
+export async function setBodyProfile(profile: BodyProfile): Promise<BodyProfile> {
+  return call('PUT', '/body-profile', profile);
 }
 
-export function setSelectedRecommendation(rec: typeof recommendations[0]) {
-  wx.setStorageSync(KEYS.selectedRecommendation, rec);
+export async function getStylePreference(): Promise<StylePreference | null> {
+  return call('GET', '/style-preference');
 }
 
-export function getCustomSelection() {
-  const saved = wx.getStorageSync(KEYS.customSelection);
-  if (saved) return saved;
-  return {
-    garment: "大衣",
-    fabric: customOptions.fabrics[0].name,
-    color: "深石墨黑",
-    fit: "合体",
-    details: ["暖金纽扣", "半里布"]
-  };
+export async function setStylePreference(pref: StylePreference): Promise<StylePreference> {
+  return call('PUT', '/style-preference', pref);
 }
 
-export function setCustomSelection(sel: ReturnType<typeof getCustomSelection>) {
-  wx.setStorageSync(KEYS.customSelection, sel);
+export async function getCustomSelection(): Promise<CustomSelection | null> {
+  return call('GET', '/custom-selection');
 }
 
-export function getOrderSummary() {
-  const selection = getCustomSelection();
-  const profile = getBodyProfile();
-  const price = calculatePrice(selection.garment, selection.fabric, selection.details);
-  return {
-    ...selection,
-    profile,
-    price,
-    deposit: Math.round(price * 0.31)
-  };
+export async function setCustomSelection(sel: CustomSelection): Promise<CustomSelection> {
+  return call('PUT', '/custom-selection', sel);
+}
+
+export async function getConfig(): Promise<any> {
+  return call('GET', '/config');
+}
+
+export async function getRecommendations(): Promise<any[]> {
+  return call('GET', '/recommendations');
+}
+
+export async function calculatePrice(garment: string, fabric: string, details: string[]): Promise<number> {
+  const res = await call<{ price: number }>('POST', '/custom-selection/price', {
+    garment_code: garment,
+    fabric_code: fabric,
+    detail_codes: details
+  });
+  return res.price;
+}
+
+export async function createOrder(selection: CustomSelection): Promise<any> {
+  return call('POST', '/orders', selection);
+}
+
+export async function bookAdvisor(orderId?: number): Promise<any> {
+  return call('POST', '/advisor-bookings', { order_id: orderId });
 }

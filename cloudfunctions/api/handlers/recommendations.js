@@ -17,9 +17,9 @@ async function handle(event, context, user) {
      FROM recommendations r
      LEFT JOIN styles s ON r.style_code = s.code
      LEFT JOIN recommendation_items ri ON r.id = ri.recommendation_id
-     LEFT JOIN garments g ON ri.garment_code = g.code
-     LEFT JOIN fabrics f ON ri.fabric_code = f.code
-     LEFT JOIN colors c ON ri.color_code = c.code
+     LEFT JOIN garments g ON ri.garment_code = g.code AND g.is_active = true
+     LEFT JOIN fabrics f ON ri.fabric_code = f.code AND f.is_active = true
+     LEFT JOIN colors c ON ri.color_code = c.code AND c.is_active = true
      WHERE r.is_active = true
      ORDER BY r.match_score DESC, ri.display_order`
   );

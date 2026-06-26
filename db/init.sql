@@ -180,7 +180,7 @@ CREATE TABLE advisor_bookings (
   id              BIGSERIAL PRIMARY KEY,
   user_id         BIGINT REFERENCES users(id) ON DELETE SET NULL,
   order_id        BIGINT REFERENCES orders(id) ON DELETE SET NULL,
-  booking_type    VARCHAR(32) DEFAULT 'offline_fitting' CHECK (booking_type IN ('offline_fitting')),
+  booking_type    VARCHAR(32) DEFAULT 'offline_fitting' CHECK (booking_type IN ('offline_fitting', 'online_consultation', 'showroom_visit')),
   status          VARCHAR(32) DEFAULT 'pending' CHECK (status IN ('pending', 'confirmed', 'completed', 'cancelled')),
   booking_date    DATE,
   remark          TEXT,

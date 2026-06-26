@@ -64,6 +64,8 @@ cd cloudfunctions/api && npm test
 | `PG_DATABASE` | `tailor_db` | 是 |
 | `PG_SSL` | `false` | 是（必须为 false） |
 
+> **注意：** `PG_SSL=false` 是当前 Tencent Cloud PostgreSQL 实例不支持 SSL 连接的临时配置。生产环境应迁移到支持 SSL 的数据库实例，并将此值改为 `true`。 
+
 ### 2.2 小程序端配置
 
 - [ ] `app.ts` 中 `env: '你的云环境ID'` 替换为真实云环境 ID
@@ -361,7 +363,7 @@ wx.cloud.callFunction({
 
 1. **部署依赖 GUI：** 云函数部署必须通过 WeChat Developer Tools 图形界面完成，无法命令行自动化
 2. **环境 ID 占位符：** `app.ts` 中 `env: '你的云环境ID'` 必须在部署前替换为真实值
-3. **PG_SSL：** 必须设置为 `false`，当前数据库主机不支持 SSL
+3. **PG_SSL：** 当前数据库主机不支持 SSL，必须设置为 `false`。生产环境建议迁移到支持 SSL 的实例。
 4. **价格一致性：** 小程序端 `calculatePriceSync` 使用本地 mock 数据，云函数端使用数据库 config 数据。若两端数据不同步，价格预览可能与最终订单价格有差异。建议统一从 `/config` 接口获取配置后本地缓存。
 5. **订单号唯一性：** `generateOrderNo` 使用 `Math.random()` 辅助生成，极端并发场景下存在极小碰撞概率。生产环境建议使用数据库序列或 UUID。
 

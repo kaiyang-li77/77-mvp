@@ -2,6 +2,8 @@
 
 这是一个面向高端私人定制场景的 AI 落地案例。项目把行业趋势采集、微信小程序定制体验、PostgreSQL 业务运维 Skill 串成一条端到端链路，让 AI 从问答工具进入真实的设计研究、用户服务和后台运营流程。
 
+在线案例：[AI × 高端男装定制行业落地案例](https://kycloud-cloudbase-d8dy5236df1413-1329564516.tcloudbaseapp.com/ai-textile-case/)
+
 ## 项目亮点
 
 - 行业趋势研究：通过 `menswear-trend-research` Skill 抓取 Vogue Runway、GQ、Hypebeast、中国国际时装周、Ontimeshow 等来源，并生成面向设计老师、品牌设计师和买手的高端男装趋势报告。
@@ -120,7 +122,8 @@ node .codex/skills/tailor-pg-ops/scripts/pg-business-actions.js list-actions
 
 ## 文档入口
 
-- 案例展示页：[docs/ai-textile-case-study.html](docs/ai-textile-case-study.html)
+- 在线案例：[AI × 高端男装定制行业落地案例](https://kycloud-cloudbase-d8dy5236df1413-1329564516.tcloudbaseapp.com/ai-textile-case/)
+- 案例源码页：[docs/ai-textile-case-study.html](docs/ai-textile-case-study.html)
 - 云函数端到端测试计划：[docs/03-cloud-functions-e2e-test-plan.md](docs/03-cloud-functions-e2e-test-plan.md)
 - 微信开发者工具手工问题清单：[docs/04-wechat-devtools-manual-bug-list.md](docs/04-wechat-devtools-manual-bug-list.md)
 - 云函数部署说明：[cloudfunctions/api/DEPLOY.md](cloudfunctions/api/DEPLOY.md)

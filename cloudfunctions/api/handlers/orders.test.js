@@ -97,7 +97,7 @@ describe('orders handler', () => {
     const user = { id: 1 };
     const event = {
       method: 'POST',
-      body: { garment_code: 'suit', fabric_code: 'wool', color_code: 'navy', fit: 'regular', detail_codes: [] },
+      body: { garment_code: 'suit', fabric_code: 'wool', color_code: 'navy', fit: 'regular', detail_codes: [], remark: '袖口稍宽一点' },
     };
     const result = await handle(event, {}, user);
 
@@ -105,11 +105,47 @@ describe('orders handler', () => {
     expect(query).toHaveBeenCalledTimes(3);
     expect(query).toHaveBeenNthCalledWith(
       2,
-      expect.stringContaining('INSERT INTO custom_selections'),
-      [1, 'suit', 'wool', 'navy', 'regular', []]
+      expect.stringContaining('VALUES ($1, $2, $3, $4, $5, $6::jsonb, $7)'),
+      [1, 'suit', 'wool', 'navy', 'regular', '[]', 3500]
     );
+    expect(query).toHaveBeenNthCalledWith(
+      3,
+      expect.stringContaining('VALUES ($1, $2, $3, $4, $5, $6, $7::jsonb, $8, $9)'),
+      expect.arrayContaining([expect.stringMatching(/^O/), 1, 20, 3500, 1085, 'pending', expect.any(String), 30, '袖口稍宽一点'])
+    );
+    const snapshot = JSON.parse(query.mock.calls[2][1][6]);
+    expect(snapshot.remark).toBe('袖口稍宽一点');
     expect(response.success).toHaveBeenCalledWith(newOrder);
     expect(result.success).toBe(true);
+  });
+
+  test('POST /orders trims remark to 120 chars', async () => {
+    const config = {
+      garments: [{ code: 'shirt', base_price: 800 }],
+      fabrics: [{ code: 'cotton', extra_price: 0 }],
+      details: [],
+    };
+    configHandler.handle.mockResolvedValue({ data: config });
+
+    const selection = { id: 21, user_id: 1, garment_code: 'shirt' };
+    const newOrder = { id: 101, user_id: 1, total_price: 800, deposit: 248, status: 'pending' };
+    const longRemark = `  ${'很'.repeat(140)}  `;
+
+    query
+      .mockResolvedValueOnce({ rows: [] })
+      .mockResolvedValueOnce({ rows: [selection] })
+      .mockResolvedValueOnce({ rows: [newOrder] });
+
+    const user = { id: 1 };
+    const event = {
+      method: 'POST',
+      body: { garment_code: 'shirt', fabric_code: 'cotton', color_code: 'white', fit: 'slim', remark: longRemark },
+    };
+    await handle(event, {}, user);
+
+    const remark = query.mock.calls[2][1][8];
+    expect(remark).toHaveLength(120);
+    expect(remark.startsWith('很')).toBe(true);
   });
 
   test('POST /orders handles missing profile gracefully', async () => {

@@ -20,14 +20,16 @@ describe('recommendations handler', () => {
   test('GET /recommendations returns active recommendations with items', async () => {
     const rows = [
       {
-        id: 1, style_code: 'classic', match_score: 95, is_active: true,
+        id: 1, code: 'rec-1', name: 'Classic Suit', style_code: 'classic', match_score: 95,
+        base_price: 398000, scene_description: 'Office', reason: 'Good fit', is_active: true,
         style_name: 'Classic',
         item_id: 101, garment_code: 'suit', fabric_code: 'wool', color_code: 'navy',
         garment_name: 'Suit', fabric_name: 'Wool', color_name: 'Navy', hex_value: '#000080',
         display_order: 1,
       },
       {
-        id: 2, style_code: 'modern', match_score: 80, is_active: true,
+        id: 2, code: 'rec-2', name: 'Modern Shirt', style_code: 'modern', match_score: 80,
+        base_price: 128000, scene_description: 'Daily', reason: 'Easy care', is_active: true,
         style_name: 'Modern',
         item_id: 102, garment_code: 'shirt', fabric_code: 'cotton', color_code: 'white',
         garment_name: 'Shirt', fabric_name: 'Cotton', color_name: 'White', hex_value: '#ffffff',
@@ -44,7 +46,14 @@ describe('recommendations handler', () => {
     expect(query).toHaveBeenCalledTimes(1);
     expect(response.success).toHaveBeenCalledWith(
       expect.arrayContaining([
-        expect.objectContaining({ id: 1, items: expect.arrayContaining([expect.objectContaining({ id: 101 })]) }),
+        expect.objectContaining({
+          id: 1,
+          code: 'rec-1',
+          name: 'Classic Suit',
+          match: 95,
+          reason: 'Good fit',
+          items: expect.arrayContaining([expect.objectContaining({ id: 101 })])
+        }),
         expect.objectContaining({ id: 2, items: expect.arrayContaining([expect.objectContaining({ id: 102 })]) }),
       ])
     );

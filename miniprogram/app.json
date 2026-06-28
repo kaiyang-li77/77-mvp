@@ -11,6 +11,38 @@
     "navigationBarTextStyle": "black",
     "navigationStyle": "custom"
   },
+  "tabBar": {
+    "color": "#78716c",
+    "selectedColor": "#ca8a04",
+    "backgroundColor": "#ffffff",
+    "borderStyle": "black",
+    "list": [
+      {
+        "pagePath": "pages/home/home",
+        "text": "首页",
+        "iconPath": "assets/tabbar/home.png",
+        "selectedIconPath": "assets/tabbar/home-active.png"
+      },
+      {
+        "pagePath": "pages/customizer/customizer",
+        "text": "定制",
+        "iconPath": "assets/tabbar/customizer.png",
+        "selectedIconPath": "assets/tabbar/customizer-active.png"
+      },
+      {
+        "pagePath": "pages/recommendations/recommendations",
+        "text": "衣橱",
+        "iconPath": "assets/tabbar/wardrobe.png",
+        "selectedIconPath": "assets/tabbar/wardrobe-active.png"
+      },
+      {
+        "pagePath": "pages/profile/profile",
+        "text": "我的",
+        "iconPath": "assets/tabbar/profile.png",
+        "selectedIconPath": "assets/tabbar/profile-active.png"
+      }
+    ]
+  },
   "style": "v2",
   "rendererOptions": {
     "skyline": {

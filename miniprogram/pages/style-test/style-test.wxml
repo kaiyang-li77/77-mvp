@@ -7,22 +7,27 @@
   </view>
   <view class="choice-grid">
     <view
-      class="choice-card {{preference.styles.includes(item) ? 'active' : ''}}"
+      class="choice-card {{selectedStyles[item] ? 'active' : ''}}"
       wx:for="{{options.styles}}"
       wx:key="*this"
       data-value="{{item}}"
       bindtap="toggleStyle"
     >
       <text class="choice-title">{{item}}</text>
+      <text class="choice-desc" wx:if="{{item === '老钱风'}}">低调、耐看、重面料质感</text>
+      <text class="choice-desc" wx:elif="{{item === '轻奢休闲风'}}">舒适松弛，有高级日常感</text>
+      <text class="choice-desc" wx:elif="{{item === '极简高级'}}">少装饰、重剪裁和面料</text>
+      <text class="choice-desc" wx:else>更挺括、有仪式感</text>
     </view>
   </view>
 
   <view class="section-title">
     <text>常用颜色</text>
+    <text>偏好排序</text>
   </view>
   <view class="swatches">
     <view
-      class="swatch {{preference.colors.includes(item) ? 'active' : ''}}"
+      class="swatch {{selectedColors[item] ? 'active' : ''}}"
       wx:for="{{options.colors}}"
       wx:key="*this"
       style="background: {{colorMap[item]}}"
@@ -51,13 +56,19 @@
   </view>
   <view class="choice-grid">
     <view
-      class="choice-card {{preference.scenes.includes(item) ? 'active' : ''}}"
+      class="choice-card {{selectedScenes[item] ? 'active' : ''}}"
       wx:for="{{options.scenes}}"
       wx:key="*this"
       data-value="{{item}}"
       bindtap="toggleScene"
     >
       <text class="choice-title">{{item}}</text>
+      <text class="choice-desc" wx:if="{{item === '通勤'}}">每周 3-5 天，要求耐穿</text>
+      <text class="choice-desc" wx:elif="{{item === '会议'}}">压场但不过分张扬</text>
+      <text class="choice-desc" wx:elif="{{item === '约会'}}">柔软、易搭配、轻便</text>
+      <text class="choice-desc" wx:elif="{{item === '婚礼'}}">正式感强，拍照出片</text>
+      <text class="choice-desc" wx:elif="{{item === '旅行'}}">轻便好打理，适合长时间穿着</text>
+      <text class="choice-desc" wx:else>日常高频，要求舒适百搭</text>
     </view>
   </view>
 </view>
@@ -65,7 +76,7 @@
 <view class="bottom-bar">
   <view class="bar-price">
     <text>风格匹配</text>
-    <text>{{preference.styles.join(' ') || '-'}}</text>
+    <text>{{styleSummary}}</text>
   </view>
   <button class="dark-btn" bindtap="generate">生成推荐</button>
 </view>

@@ -6,6 +6,10 @@ const configHandler = require('./config');
 const DEPOSIT_RATIO = 0.31;
 
 let orderCounter = 0;
+function toJsonb(value) {
+  return JSON.stringify(value || []);
+}
+
 function generateOrderNo() {
   const now = new Date();
   const date = now.toISOString().slice(0, 10).replace(/-/g, '');
@@ -41,6 +45,7 @@ async function handle(event, context, user) {
 
   if (method === 'POST') {
     const { garment_code, fabric_code, color_code, fit, detail_codes, estimated_days = 30 } = body;
+    const remark = typeof body.remark === 'string' ? body.remark.trim().slice(0, 120) : '';
 
     const configRes = await configHandler.handle(event, context, user);
     const config = configRes.data;
@@ -53,9 +58,9 @@ async function handle(event, context, user) {
     );
 
     const { rows: selectionRows } = await query(
-      `INSERT INTO custom_selections (user_id, garment_code, fabric_code, color_code, fit, detail_codes)
-       VALUES ($1, $2, $3, $4, $5, $6) RETURNING *`,
-      [user.id, garment_code, fabric_code, color_code, fit, detail_codes || []]
+      `INSERT INTO custom_selections (user_id, garment_code, fabric_code, color_code, fit, detail_codes, calculated_price)
+       VALUES ($1, $2, $3, $4, $5, $6::jsonb, $7) RETURNING *`,
+      [user.id, garment_code, fabric_code, color_code, fit, toJsonb(detail_codes), totalPrice]
     );
     const selection = selectionRows[0];
 
@@ -66,14 +71,15 @@ async function handle(event, context, user) {
       fabric_code,
       color_code,
       fit,
-      detail_codes: detail_codes || []
+      detail_codes: detail_codes || [],
+      remark
     };
 
     const orderNo = generateOrderNo();
     const { rows } = await query(
-      `INSERT INTO orders (order_no, user_id, custom_selection_id, total_price, deposit, status, snapshot, estimated_days)
-       VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING *`,
-      [orderNo, user.id, selection.id, totalPrice, deposit, 'pending', snapshot, estimated_days]
+      `INSERT INTO orders (order_no, user_id, custom_selection_id, total_price, deposit, status, snapshot, estimated_days, remark)
+       VALUES ($1, $2, $3, $4, $5, $6, $7::jsonb, $8, $9) RETURNING *`,
+      [orderNo, user.id, selection.id, totalPrice, deposit, 'pending', JSON.stringify(snapshot), estimated_days, remark]
     );
     return response.success(rows[0]);
   }

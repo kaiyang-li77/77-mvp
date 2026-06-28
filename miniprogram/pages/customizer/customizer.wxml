@@ -1,30 +1,47 @@
-<navigation-bar title="定制工作台" back="{{true}}"></navigation-bar>
+<navigation-bar title="定制工作台" back="{{false}}"></navigation-bar>
 
 <view class="page customizer-page">
-  <view class="preview">
-    <text class="preview-label">{{selection.garment}} / {{selection.fit}}</text>
-    <view class="preview-swatch" style="background: {{colorMap[selection.color]}}"></view>
+  <view class="customizer-hero">
+    <view class="tool-tabs">
+      <text class="tool-tab active">衣型</text>
+      <text class="tool-tab">毛料</text>
+      <text class="tool-tab">颜色</text>
+      <text class="tool-tab">细节</text>
+    </view>
+    <view class="preview">
+      <text class="preview-label">{{garmentName}} / {{selection.fit}}</text>
+      <view class="preview-garment" aria-label="大衣定制预览">
+        <view class="preview-coat-body"></view>
+        <view class="preview-coat-lapel left"></view>
+        <view class="preview-coat-lapel right"></view>
+        <view class="preview-coat-seam left"></view>
+        <view class="preview-coat-seam right"></view>
+        <view class="preview-coat-button top"></view>
+        <view class="preview-coat-button bottom"></view>
+      </view>
+      <view class="preview-swatch" style="background: {{colorHex}}"></view>
+    </view>
   </view>
 
   <view class="section-title"><text>衣型</text></view>
   <view class="tag-list">
     <text
-      class="tag {{selection.garment === item ? 'active' : ''}}"
+      class="tag {{selection.garment_code === item.code ? 'active' : ''}}"
       wx:for="{{options.garmentTypes}}"
-      wx:key="*this"
-      data-value="{{item}}"
+      wx:key="code"
+      data-value="{{item.code}}"
       bindtap="selectGarment"
-    >{{item}}</text>
+    >{{item.name}}</text>
   </view>
 
   <view class="section-title"><text>颜色</text></view>
   <view class="swatches">
     <view
-      class="swatch {{selection.color === item ? 'active' : ''}}"
+      class="swatch {{selection.color_code === item.code ? 'active' : ''}}"
       wx:for="{{options.colors}}"
-      wx:key="*this"
-      style="background: {{colorMap[item]}}"
-      data-value="{{item}}"
+      wx:key="code"
+      style="background: {{item.hex}}"
+      data-value="{{item.code}}"
       bindtap="selectColor"
     ></view>
   </view>
@@ -40,31 +57,34 @@
     >{{item}}</text>
   </view>
 
-  <view class="section-title"><text>选择毛料</text></view>
+  <view class="section-title"><text>选择毛料</text><text>冬季推荐</text></view>
   <view class="fabric-list">
     <view
-      class="fabric-card {{selection.fabric === item.name ? 'active' : ''}}"
+      class="fabric-card {{selection.fabric_code === item.code ? 'active' : ''}}"
       wx:for="{{options.fabrics}}"
-      wx:key="name"
-      data-value="{{item.name}}"
+      wx:key="code"
+      data-value="{{item.code}}"
       bindtap="selectFabric"
     >
       <view class="texture"></view>
       <view>
         <text class="fabric-name">{{item.name}}</text>
-        <text class="fabric-desc">{{item.price > 0 ? '加价 ¥' + item.price : '默认面料'}}</text>
+        <text class="fabric-desc" wx:if="{{item.name === '精纺羊毛'}}">挺括、抗皱、商务通勤</text>
+        <text class="fabric-desc" wx:elif="{{item.name === '羊绒混纺'}}">柔软保暖，垂坠更自然</text>
+        <text class="fabric-desc" wx:elif="{{item.name === '粗花呢'}}">复古质感，适合外套</text>
+        <text class="fabric-desc" wx:else>轻便透气，适合春夏场景</text>
       </view>
-      <text class="price">{{item.price > 0 ? '+¥' + item.price : '¥0'}}</text>
+      <text class="price">{{item.price > 0 ? '+¥' + item.price : '+¥0'}}</text>
     </view>
   </view>
 
-  <view class="section-title"><text>工艺细节</text></view>
+  <view class="section-title"><text>工艺细节</text><text>已选 {{detailCount}} 项</text></view>
   <view class="tag-list">
     <text
-      class="tag {{selection.details.includes(item.name) ? 'active' : ''}}"
+      class="tag {{selectedDetails[item.code] ? 'active' : ''}}"
       wx:for="{{options.details}}"
-      wx:key="name"
-      data-value="{{item.name}}"
+      wx:key="code"
+      data-value="{{item.code}}"
       bindtap="toggleDetail"
     >{{item.name}}</text>
   </view>

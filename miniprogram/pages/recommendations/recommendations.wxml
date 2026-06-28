@@ -1,4 +1,4 @@
-<navigation-bar title="AI搭配推荐" back="{{true}}"></navigation-bar>
+<navigation-bar title="AI搭配推荐" back="{{false}}"></navigation-bar>
 
 <view class="page rec-page">
   <view class="section-title">
@@ -13,12 +13,20 @@
     data-index="{{index}}"
     bindtap="select"
   >
-    <view class="look-art"></view>
+    <view class="look-art {{index === 1 ? 'navy' : index === 2 ? 'olive' : 'charcoal'}}" style="{{item.colorHex ? 'background: ' + item.colorHex : ''}}">
+      <view class="look-garment" aria-label="方案大衣缩略图">
+        <view class="look-coat-body"></view>
+        <view class="look-coat-lapel left"></view>
+        <view class="look-coat-lapel right"></view>
+        <view class="look-coat-button top"></view>
+        <view class="look-coat-button bottom"></view>
+      </view>
+    </view>
     <view class="look-info">
       <text class="look-name">{{item.name}}</text>
       <text class="look-reason">{{item.reason}}</text>
       <view class="score">
-        <text>匹配 {{item.match}}%</text>
+        <text>匹配 {{item.matchText}}</text>
         <view class="progress"><view class="progress-inner" style="width: {{item.match}}%"></view></view>
       </view>
     </view>

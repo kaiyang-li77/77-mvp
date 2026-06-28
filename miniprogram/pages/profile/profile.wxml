@@ -1,4 +1,4 @@
-<navigation-bar title="身材档案" back="{{true}}"></navigation-bar>
+<navigation-bar title="身材档案" back="{{false}}"></navigation-bar>
 
 <view class="page profile-page">
   <view class="profile-summary">
@@ -11,8 +11,29 @@
       <text class="metric-label">体重 kg</text>
     </view>
     <view class="metric">
-      <text class="metric-value">{{profile.bodyType}}</text>
+      <text class="metric-value">{{profile.body_type}}</text>
       <text class="metric-label">身型</text>
+    </view>
+  </view>
+
+  <view class="section-title">
+    <text>核心尺寸</text>
+    <text>AI 已校验</text>
+  </view>
+
+  <view class="body-map">
+    <view class="body-figure" aria-label="人体量体线示意">
+      <view class="body-head"></view>
+      <view class="body-torso"></view>
+      <view class="measure-line shoulder"></view>
+      <view class="measure-line waist"></view>
+      <view class="measure-line leg"></view>
+      <view class="body-arm left"></view>
+      <view class="body-arm right"></view>
+    </view>
+    <view class="body-tags">
+      <text class="tag active">{{profile.body_type}}身型</text>
+      <text class="tag" wx:for="{{bodyTags}}" wx:key="*this">{{item}}</text>
     </view>
   </view>
 
@@ -49,7 +70,7 @@
     </view>
     <view class="field">
       <text class="field-label">裤长</text>
-      <input type="digit" value="{{profile.pantsLength}}" data-field="pantsLength" bindinput="onInput" />
+      <input type="digit" value="{{profile.pants_length}}" data-field="pants_length" bindinput="onInput" />
       <text class="field-unit">cm</text>
     </view>
   </view>
@@ -57,14 +78,15 @@
   <view class="section-title">
     <text>身型选择</text>
   </view>
-  <view class="tag-list">
-    <text
-      class="tag {{profile.bodyType === item ? 'active' : ''}}"
+  <view class="tag-list body-type-list">
+    <view
+      class="tag body-type-option {{profile.body_type === item ? 'active' : ''}}"
       wx:for="{{bodyTypes}}"
       wx:key="*this"
       data-type="{{item}}"
       bindtap="selectBodyType"
-    >{{item}}</text>
+      hover-class="tag-pressed"
+    >{{item}}</view>
   </view>
 
   <view class="section-title">
@@ -81,6 +103,16 @@
       <input type="digit" value="{{profile.weight}}" data-field="weight" bindinput="onInput" />
       <text class="field-unit">kg</text>
     </view>
+  </view>
+
+  <view class="section-title">
+    <text>采集方式</text>
+    <text>3 选 1</text>
+  </view>
+  <view class="tag-list">
+    <text class="tag active">手动输入</text>
+    <text class="tag">上传正侧面照</text>
+    <text class="tag">到店量体</text>
   </view>
 </view>
 

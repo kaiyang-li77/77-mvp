@@ -1,4 +1,4 @@
-# 百分之七十七定制小程序简单版 Implementation Plan
+# 私人定制小程序简单版 Implementation Plan
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use `superpowers:subagent-driven-development` (recommended) or `superpowers:executing-plans` to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
@@ -14,7 +14,7 @@
 - **不做真实支付 / 订单状态 / 用户系统**：订单页仅做模拟下单成功弹窗与预约顾问提示。
 - **不做复杂动画 / 拖拽 / 3D 预览 / 图片上传**。
 - **视觉风格**：深石墨黑主色、暖金色强调、米白/浅灰背景、克制留白、避免促销感。
-- **品牌信息固定**：深圳市百分之七十七科技有限公司、77 Atelier、深圳南山区中铁南方总部大厦903。
+- **服务信息固定**：私人定制工作室、高端私人定制、线下量体门店。
 - **推荐方案固定**：老钱风商务套装、轻奢休闲通勤款、高级度假外套。
 - **页面路由**：`pages/home/home`、`pages/profile/profile`、`pages/style-test/style-test`、`pages/recommendations/recommendations`、`pages/customizer/customizer`、`pages/order-confirm/order-confirm`。
 - **导航栏**：项目已配置 `navigationStyle: custom`，统一复用现有 `navigation-bar` 组件或自绘顶部导航。
@@ -94,15 +94,14 @@
 
 ```typescript
 export const brandProfile = {
-  name: "深圳市百分之七十七科技有限公司",
-  displayName: "百分之七十七定制",
-  englishName: "77 Atelier",
-  foundedAt: "2026年5月20日",
+  name: "私人定制工作室",
+  displayName: "高端私人定制",
+  englishName: "Private Atelier",
   targetUser: "高净值客户",
   positioning: "高端私人服装定制",
   styles: ["老钱风", "轻奢休闲风"],
   serviceKeywords: ["高品质选材", "精细化工艺", "一对一专属定制", "沉浸式定制体验"],
-  address: "深圳南山区中铁南方总部大厦903"
+  address: "线下量体门店"
 };
 
 export const defaultBodyProfile = {
@@ -514,7 +513,7 @@ Page({
 - [ ] **Step 3: 实现 `home.wxml` 结构**
 
 ```xml
-<navigation-bar title="77 Atelier" back="{{false}}"></navigation-bar>
+<navigation-bar title="私人定制" back="{{false}}"></navigation-bar>
 
 <view class="page home-content">
   <view class="hero-card">
@@ -1724,9 +1723,9 @@ Page({
   </view>
 
   <view class="order-card">
-    <view class="order-line"><text>服务机构</text><text>{{brand.name}}</text></view>
+    <view class="order-line"><text>服务类型</text><text>{{brand.name}}</text></view>
     <view class="order-line"><text>服务标准</text><text>面料甄选 / 版型打磨 / 一对一专属定制</text></view>
-    <view class="order-line"><text>线下量体地址</text><text>{{brand.address}}</text></view>
+    <view class="order-line"><text>量体安排</text><text>{{brand.address}}</text></view>
   </view>
 
   <view class="order-card">
@@ -1787,7 +1786,7 @@ Page({
 - [ ] **Step 5: 微信开发者工具预览订单确认页**
 
 Run: 从定制工作台点击加入方案进入。
-Expected: 汇总定制选项、身材档案、服务机构与地址、价格明细；确认支付弹出成功弹窗；点击顾问复核区域弹出预约成功提示。
+Expected: 汇总定制选项、身材档案、服务类型与量体安排、价格明细；确认支付弹出成功弹窗；点击顾问复核区域弹出预约成功提示。
 
 - [ ] **Step 6: Commit**
 
@@ -1857,7 +1856,7 @@ git commit -m "style: polish active states and spacing for mobile preview"
 - 风格、颜色多选，版型单选，场景多选：Task 4。
 - 3 套推荐方案展示：Task 5。
 - 定制工作台衣型、颜色、面料、细节选择与实时价格：Task 6。
-- 订单确认页汇总、服务机构、地址、模拟下单/预约顾问：Task 7。
+- 订单确认页汇总、服务类型、量体安排、模拟下单/预约顾问：Task 7。
 - 移动端布局与体验优化：Task 8。
 
 **2. Placeholder scan：** 无 TBD/TODO；所有步骤含具体代码与命令。

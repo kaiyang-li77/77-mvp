@@ -1,13 +1,12 @@
 export const brandProfile = {
-  name: "深圳市百分之七十七科技有限公司",
-  displayName: "百分之七十七定制",
-  englishName: "77 Atelier",
-  foundedAt: "2026年5月20日",
+  name: "私人定制工作室",
+  displayName: "高端私人定制",
+  englishName: "Private Atelier",
   targetUser: "高净值客户",
   positioning: "高端私人服装定制",
   styles: ["老钱风", "轻奢休闲风"],
   serviceKeywords: ["高品质选材", "精细化工艺", "一对一专属定制", "沉浸式定制体验"],
-  address: "深圳南山区中铁南方总部大厦903"
+  address: "线下量体门店"
 };
 
 export const defaultBodyProfile = {
@@ -18,17 +17,17 @@ export const defaultBodyProfile = {
   waist: 71,
   hip: 92,
   sleeve: 58,
-  pantsLength: 99,
-  bodyType: "直筒"
+  pants_length: 99,
+  body_type: "直筒"
 };
 
 export const bodyTypeOptions = ["直筒", "梨形", "倒三角", "苹果型", "沙漏型"];
 
 export const defaultStylePreference = {
-  styles: ["老钱风", "轻奢休闲风"],
-  colors: ["深石墨黑", "藏蓝"],
+  preferred_styles: ["老钱风", "轻奢休闲风"],
+  preferred_colors: ["深石墨黑", "藏蓝"],
   fit: "合体",
-  scenes: ["商务通勤", "周末旅行"]
+  preferred_scenes: ["通勤", "旅行"]
 };
 
 export const styleOptions = {
@@ -47,22 +46,40 @@ export const colorMap: Record<string, string> = {
 };
 
 export const customOptions = {
-  garmentTypes: ["大衣", "西装", "衬衫", "针织", "裤装"],
+  garmentTypes: [
+    { code: "coat", name: "大衣" },
+    { code: "suit", name: "西装" },
+    { code: "shirt", name: "衬衫" },
+    { code: "knit", name: "针织" },
+    { code: "pants", name: "裤装" }
+  ],
+  colors: [
+    { code: "graphite_black", name: "深石墨黑", hex: "#1c1917" },
+    { code: "navy", name: "藏蓝", hex: "#172554" },
+    { code: "camel", name: "驼色", hex: "#a8a29e" },
+    { code: "burgundy", name: "酒红", hex: "#7f1d1d" },
+    { code: "olive_green", name: "橄榄绿", hex: "#5f6f52" }
+  ],
   fabrics: [
-    { name: "精纺羊毛", price: 0 },
-    { name: "羊绒混纺", price: 680 },
-    { name: "粗花呢", price: 420 },
-    { name: "亚麻混纺", price: 260 }
+    { code: "worsted_wool", name: "精纺羊毛", price: 0 },
+    { code: "cashmere_blend", name: "羊绒混纺", price: 680 },
+    { code: "tweed", name: "粗花呢", price: 420 },
+    { code: "linen_blend", name: "亚麻混纺", price: 260 }
   ],
   details: [
-    { name: "暖金纽扣", price: 80 },
-    { name: "姓名刺绣", price: 120 },
-    { name: "半里布", price: 0 },
-    { name: "斜插口袋", price: 60 }
+    { code: "gold_button", name: "暖金纽扣", price: 80 },
+    { code: "name_embroidery", name: "姓名刺绣", price: 120 },
+    { code: "half_lining", name: "半里布", price: 0 },
+    { code: "slant_pocket", name: "斜插口袋", price: 60 }
   ]
 };
 
 export const garmentBasePrice: Record<string, number> = {
+  coat: 3980,
+  suit: 3680,
+  shirt: 1280,
+  knit: 1580,
+  pants: 1480,
   "大衣": 3980,
   "西装": 3680,
   "衬衫": 1280,

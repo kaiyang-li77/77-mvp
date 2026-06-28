@@ -10,7 +10,8 @@ async function handle(event, context, user) {
 
   const { rows: items } = await query(
     `SELECT
-       r.id, r.style_code, r.match_score, r.is_active, r.created_at, r.updated_at,
+       r.id, r.code, r.name, r.style_code, r.match_score, r.base_price, r.scene_description, r.reason,
+       r.is_active, r.created_at, r.updated_at,
        s.name as style_name,
        ri.id as item_id, ri.garment_code, ri.fabric_code, ri.color_code, ri.display_order,
        g.name as garment_name, f.name as fabric_name, c.name as color_name, c.hex_value
@@ -29,8 +30,14 @@ async function handle(event, context, user) {
     if (!recMap.has(row.id)) {
       recMap.set(row.id, {
         id: row.id,
+        code: row.code,
+        name: row.name,
         style_code: row.style_code,
         match_score: row.match_score,
+        match: row.match_score,
+        base_price: row.base_price,
+        scene_description: row.scene_description,
+        reason: row.reason,
         is_active: row.is_active,
         created_at: row.created_at,
         updated_at: row.updated_at,

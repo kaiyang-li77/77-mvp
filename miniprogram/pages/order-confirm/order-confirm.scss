@@ -71,3 +71,36 @@
   color: var(--muted);
   margin-top: 4rpx;
 }
+
+.remark-card {
+  padding-bottom: 18rpx;
+}
+
+.remark-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16rpx;
+}
+
+.remark-header text:first-child {
+  font-size: 24rpx;
+  color: var(--muted);
+}
+
+.remark-header text:last-child {
+  font-size: 20rpx;
+  color: var(--muted);
+}
+
+.remark-input {
+  width: 100%;
+  min-height: 120rpx;
+  box-sizing: border-box;
+  padding: 18rpx;
+  border-radius: var(--radius);
+  background: #fafaf9;
+  color: var(--ink);
+  font-size: 24rpx;
+  line-height: 1.5;
+}

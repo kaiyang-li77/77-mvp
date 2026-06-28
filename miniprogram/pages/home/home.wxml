@@ -1,4 +1,4 @@
-<navigation-bar title="77 Atelier" back="{{false}}"></navigation-bar>
+<navigation-bar title="私人定制" back="{{false}}"></navigation-bar>
 
 <view class="page home-content">
   <view class="hero-card">
@@ -7,6 +7,15 @@
         <text class="hero-title">你的专属私人衣橱</text>
         <text class="hero-note">老钱风与轻奢休闲风，一对一匹配身形和个人气质。</text>
       </view>
+    </view>
+    <view class="hero-garment" aria-label="定制大衣示意图">
+      <view class="coat-body"></view>
+      <view class="coat-lapel left"></view>
+      <view class="coat-lapel right"></view>
+      <view class="coat-seam left"></view>
+      <view class="coat-seam right"></view>
+      <view class="coat-button top"></view>
+      <view class="coat-button bottom"></view>
     </view>
     <view class="hero-actions">
       <button class="primary-btn" bindtap="goProfile">开始定制</button>

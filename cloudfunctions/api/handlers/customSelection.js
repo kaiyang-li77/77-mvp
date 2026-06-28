@@ -3,6 +3,10 @@ const response = require('../utils/response');
 const { calculatePrice } = require('../utils/price');
 const configHandler = require('./config');
 
+function toJsonb(value) {
+  return JSON.stringify(value || []);
+}
+
 async function handle(event, context, user) {
   const { method, body = {} } = event;
 
@@ -29,17 +33,17 @@ async function handle(event, context, user) {
     if (existing.length > 0) {
       const { rows } = await query(
         `UPDATE custom_selections
-         SET garment_code = $1, fabric_code = $2, color_code = $3, fit = $4, detail_codes = $5, calculated_price = $6, updated_at = now()
+         SET garment_code = $1, fabric_code = $2, color_code = $3, fit = $4, detail_codes = $5::jsonb, calculated_price = $6, updated_at = now()
          WHERE id = $7 RETURNING *`,
-        [garment_code, fabric_code, color_code, fit, detail_codes || [], calculatedPrice, existing[0].id]
+        [garment_code, fabric_code, color_code, fit, toJsonb(detail_codes), calculatedPrice, existing[0].id]
       );
       return response.success(rows[0]);
     }
 
     const { rows } = await query(
       `INSERT INTO custom_selections (user_id, garment_code, fabric_code, color_code, fit, detail_codes, calculated_price)
-       VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *`,
-      [user.id, garment_code, fabric_code, color_code, fit, detail_codes || [], calculatedPrice]
+       VALUES ($1, $2, $3, $4, $5, $6::jsonb, $7) RETURNING *`,
+      [user.id, garment_code, fabric_code, color_code, fit, toJsonb(detail_codes), calculatedPrice]
     );
     return response.success(rows[0]);
   }

@@ -77,6 +77,16 @@ describe('stylePreference handler', () => {
     const result = await handle(event, {}, user);
 
     expect(query).toHaveBeenCalledTimes(2);
+    expect(query).toHaveBeenLastCalledWith(
+      expect.stringContaining('preferred_styles = $1::jsonb'),
+      [
+        JSON.stringify(['casual']),
+        JSON.stringify(['white']),
+        'loose',
+        JSON.stringify(['weekend']),
+        3
+      ]
+    );
     expect(response.success).toHaveBeenCalledWith(updated);
     expect(result).toEqual({ success: true, data: updated, message: '' });
   });
@@ -92,8 +102,8 @@ describe('stylePreference handler', () => {
     const result = await handle(event, {}, user);
 
     expect(query).toHaveBeenLastCalledWith(
-      expect.stringContaining('INSERT INTO style_preferences'),
-      [1, [], [], null, []]
+      expect.stringContaining('VALUES ($1, $2::jsonb, $3::jsonb, $4, $5::jsonb)'),
+      [1, '[]', '[]', null, '[]']
     );
     expect(result.success).toBe(true);
   });

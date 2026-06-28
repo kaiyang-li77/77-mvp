@@ -71,6 +71,10 @@ describe('customSelection handler', () => {
 
     expect(configHandler.handle).toHaveBeenCalledWith(event, {}, user);
     expect(query).toHaveBeenCalledTimes(2);
+    expect(query).toHaveBeenLastCalledWith(
+      expect.stringContaining('VALUES ($1, $2, $3, $4, $5, $6::jsonb, $7)'),
+      [1, 'suit', 'wool', 'navy', 'regular', JSON.stringify(['monogram']), 3700]
+    );
     expect(response.success).toHaveBeenCalledWith(newSelection);
     expect(result.success).toBe(true);
   });
@@ -97,6 +101,10 @@ describe('customSelection handler', () => {
     const result = await handle(event, {}, user);
 
     expect(query).toHaveBeenCalledTimes(2);
+    expect(query).toHaveBeenLastCalledWith(
+      expect.stringContaining('detail_codes = $5::jsonb'),
+      [expect.any(String), expect.any(String), expect.any(String), expect.any(String), '[]', 800, 3]
+    );
     expect(response.success).toHaveBeenCalledWith(updated);
     expect(result).toEqual({ success: true, data: updated, message: '' });
   });

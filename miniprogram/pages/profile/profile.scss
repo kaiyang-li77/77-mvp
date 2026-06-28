@@ -36,6 +36,97 @@
   padding: 0 28rpx;
 }
 
+.body-map {
+  margin: 0 28rpx;
+  min-height: 336rpx;
+  border-radius: 32rpx;
+  background: linear-gradient(180deg, #fff, #f5f5f4);
+  border: 1rpx solid var(--line);
+  display: grid;
+  grid-template-columns: 220rpx 1fr;
+  gap: 24rpx;
+  padding: 24rpx;
+  align-items: center;
+}
+
+.body-figure {
+  position: relative;
+  height: 278rpx;
+}
+
+.body-head {
+  position: absolute;
+  left: 78rpx;
+  top: 0;
+  width: 52rpx;
+  height: 52rpx;
+  border-radius: 999rpx;
+  background: #d6d3d1;
+}
+
+.body-torso {
+  position: absolute;
+  left: 48rpx;
+  top: 78rpx;
+  width: 112rpx;
+  height: 154rpx;
+  background: #e7e5e4;
+  border: 2rpx solid #a8a29e;
+  clip-path: polygon(16% 0, 84% 0, 100% 100%, 0 100%);
+}
+
+.body-arm {
+  position: absolute;
+  top: 96rpx;
+  width: 12rpx;
+  height: 106rpx;
+  border-radius: 999rpx;
+  background: #a8a29e;
+  transform-origin: top center;
+}
+
+.body-arm.left {
+  left: 28rpx;
+  transform: rotate(18deg);
+}
+
+.body-arm.right {
+  right: 28rpx;
+  transform: rotate(-18deg);
+}
+
+.measure-line {
+  position: absolute;
+  left: 42rpx;
+  height: 6rpx;
+  border-radius: 999rpx;
+  background: var(--gold);
+  z-index: 2;
+}
+
+.measure-line.shoulder {
+  top: 116rpx;
+  width: 124rpx;
+}
+
+.measure-line.waist {
+  top: 162rpx;
+  left: 54rpx;
+  width: 104rpx;
+}
+
+.measure-line.leg {
+  top: 244rpx;
+  left: 72rpx;
+  width: 70rpx;
+}
+
+.body-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14rpx;
+}
+
 .field {
   background: #fff;
   border: 1rpx solid var(--line);
@@ -69,4 +160,21 @@
   flex-wrap: wrap;
   gap: 16rpx;
   padding: 0 28rpx;
+}
+
+.body-type-list {
+  position: relative;
+  z-index: 1;
+}
+
+.body-type-option {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 84rpx;
+  box-sizing: border-box;
+}
+
+.tag-pressed {
+  opacity: 0.72;
 }

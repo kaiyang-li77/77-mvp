@@ -6,11 +6,11 @@
     <view class="order-line"><text>面料</text><text>{{order.fabric}}</text></view>
     <view class="order-line"><text>颜色</text><text>{{order.color}}</text></view>
     <view class="order-line"><text>版型</text><text>{{order.fit}}</text></view>
-    <view class="order-line"><text>工艺</text><text>{{order.details.join(' / ') || '-'}}</text></view>
+    <view class="order-line"><text>工艺</text><text>{{order.detailsText}}</text></view>
   </view>
 
   <view class="order-card">
-    <view class="order-line"><text>尺寸档案</text><text>{{order.profile.height}}cm / {{order.profile.weight}}kg / {{order.profile.bodyType}}</text></view>
+    <view class="order-line"><text>尺寸档案</text><text>{{order.profileText}}</text></view>
     <view class="order-line"><text>预计工期</text><text>18-25 天</text></view>
   </view>
 
@@ -23,22 +23,38 @@
   </view>
 
   <view class="order-card">
-    <view class="order-line"><text>服务机构</text><text>{{brand.name}}</text></view>
+    <view class="order-line"><text>服务类型</text><text>{{brand.name}}</text></view>
     <view class="order-line"><text>服务标准</text><text>面料甄选 / 版型打磨 / 一对一专属定制</text></view>
-    <view class="order-line"><text>线下量体地址</text><text>{{brand.address}}</text></view>
+    <view class="order-line"><text>量体安排</text><text>{{brand.address}}</text></view>
+  </view>
+
+  <view class="order-card remark-card">
+    <view class="remark-header">
+      <text>订单备注</text>
+      <text>{{remark.length}}/120</text>
+    </view>
+    <textarea
+      class="remark-input"
+      value="{{remark}}"
+      maxlength="120"
+      auto-height="{{true}}"
+      placeholder="可填写特殊尺寸、面料偏好、顾问沟通事项"
+      bindinput="onRemarkInput"
+    />
   </view>
 
   <view class="order-card">
-    <view class="order-line"><text>商品金额</text><text>¥{{order.price}}</text></view>
+    <view class="order-line"><text>商品金额</text><text>¥{{order.priceText}}</text></view>
+    <view class="order-line"><text>刺绣服务</text><text>¥120</text></view>
     <view class="order-line"><text>顾问复核</text><text>¥0</text></view>
-    <view class="order-line"><text>订金支付</text><text>¥{{order.deposit}}</text></view>
+    <view class="order-line"><text>订金支付</text><text>¥{{order.depositText}}</text></view>
   </view>
 </view>
 
 <view class="bottom-bar">
   <view class="bar-price">
     <text>本次支付</text>
-    <text>¥{{order.deposit}}</text>
+    <text>¥{{order.depositText}}</text>
   </view>
   <button class="primary-btn" bindtap="confirm">确认支付</button>
 </view>

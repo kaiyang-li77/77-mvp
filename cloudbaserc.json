@@ -1,0 +1,15 @@
+{
+  "$schema": "https://static.cloudbase.net/cli/cloudbaserc.schema.json",
+  "envId": "kycloud-cloudbase-d8dy5236df1413",
+  "functionRoot": "cloudfunctions",
+  "functions": [
+    {
+      "name": "api",
+      "dir": "cloudfunctions/api",
+      "handler": "index.main",
+      "runtime": "Nodejs18.15",
+      "timeout": 65,
+      "memorySize": 256
+    }
+  ]
+}

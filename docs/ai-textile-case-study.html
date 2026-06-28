@@ -1,0 +1,1146 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AI × 高端男装定制 | 行业落地案例</title>
+  <style>
+    :root {
+      --ink: #151515;
+      --muted: #6f6a62;
+      --line: #ded8cd;
+      --paper: #fbfaf7;
+      --white: #ffffff;
+      --green: #143d33;
+      --green-2: #1f5a49;
+      --gold: #b88732;
+      --clay: #b5664a;
+      --blue: #2f5f78;
+      --shadow: 0 24px 70px rgba(29, 25, 18, 0.12);
+      --radius: 8px;
+      color-scheme: light;
+      font-family:
+        "Inter", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei",
+        system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      background:
+        linear-gradient(90deg, rgba(20, 61, 51, 0.03) 1px, transparent 1px),
+        linear-gradient(180deg, rgba(20, 61, 51, 0.03) 1px, transparent 1px),
+        var(--paper);
+      background-size: 34px 34px;
+      color: var(--ink);
+      letter-spacing: 0;
+    }
+
+    button,
+    a {
+      font: inherit;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .topbar {
+      position: fixed;
+      z-index: 20;
+      top: 0;
+      left: 0;
+      right: 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 18px clamp(18px, 4vw, 56px);
+      border-bottom: 1px solid rgba(222, 216, 205, 0.75);
+      background: rgba(251, 250, 247, 0.84);
+      backdrop-filter: blur(18px);
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      min-width: 0;
+      font-weight: 760;
+    }
+
+    .brand-mark {
+      display: grid;
+      width: 34px;
+      height: 34px;
+      place-items: center;
+      border: 1px solid var(--ink);
+      background: var(--green);
+      color: var(--paper);
+      font-size: 12px;
+      line-height: 1;
+    }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .nav a {
+      padding: 9px 12px;
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 650;
+    }
+
+    .nav a:hover {
+      color: var(--green);
+    }
+
+    .hero {
+      position: relative;
+      display: grid;
+      grid-template-columns: minmax(0, 0.92fr) minmax(420px, 1.08fr);
+      gap: clamp(28px, 5vw, 72px);
+      align-items: center;
+      min-height: 100svh;
+      padding: 116px clamp(20px, 5vw, 76px) 60px;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      content: "";
+      background:
+        radial-gradient(circle at 12% 82%, rgba(184, 135, 50, 0.11), transparent 30%),
+        linear-gradient(110deg, rgba(255, 255, 255, 0.88) 0%, rgba(255, 255, 255, 0.52) 48%, transparent 100%);
+    }
+
+    .hero-copy,
+    .hero-stage {
+      position: relative;
+      z-index: 1;
+    }
+
+    .case-index {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 26px;
+      color: var(--green);
+      font-size: 13px;
+      font-weight: 760;
+    }
+
+    .case-index::before {
+      width: 42px;
+      height: 1px;
+      content: "";
+      background: var(--green);
+    }
+
+    h1 {
+      margin: 0;
+      max-width: 720px;
+      font-size: clamp(48px, 7.6vw, 104px);
+      font-weight: 820;
+      line-height: 0.98;
+      letter-spacing: 0;
+    }
+
+    .lead {
+      max-width: 650px;
+      margin: 28px 0 0;
+      color: #45413a;
+      font-size: clamp(17px, 1.7vw, 22px);
+      line-height: 1.78;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 34px;
+    }
+
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 44px;
+      padding: 12px 18px;
+      border: 1px solid var(--green);
+      border-radius: 6px;
+      background: var(--green);
+      color: var(--white);
+      font-size: 14px;
+      font-weight: 760;
+    }
+
+    .button.secondary {
+      background: transparent;
+      color: var(--green);
+    }
+
+    .proof-strip {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 42px;
+      max-width: 650px;
+    }
+
+    .proof {
+      min-height: 94px;
+      padding: 16px;
+      border: 1px solid rgba(20, 61, 51, 0.16);
+      border-radius: var(--radius);
+      background: rgba(255, 255, 255, 0.72);
+    }
+
+    .proof strong {
+      display: block;
+      color: var(--green);
+      font-size: 26px;
+      line-height: 1;
+    }
+
+    .proof span {
+      display: block;
+      margin-top: 12px;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.45;
+    }
+
+    .hero-stage {
+      min-height: 660px;
+    }
+
+    .orbit {
+      position: absolute;
+      inset: 0;
+      border: 1px solid rgba(20, 61, 51, 0.12);
+      border-radius: 50%;
+      transform: rotate(-11deg);
+      animation: breathe 7s ease-in-out infinite;
+    }
+
+    .stage-card {
+      position: absolute;
+      border: 1px solid rgba(20, 61, 51, 0.16);
+      border-radius: var(--radius);
+      background: rgba(255, 255, 255, 0.91);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(16px);
+    }
+
+    .chat-card {
+      z-index: 3;
+      top: 22px;
+      left: 0;
+      width: min(410px, 56%);
+      padding: 18px;
+      animation: floatCard 6s ease-in-out infinite;
+    }
+
+    .card-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 16px;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 760;
+    }
+
+    .dots {
+      display: flex;
+      gap: 6px;
+    }
+
+    .dots i {
+      width: 8px;
+      height: 8px;
+      border-radius: 99px;
+      background: var(--line);
+    }
+
+    .dots i:nth-child(1) {
+      background: var(--clay);
+    }
+
+    .dots i:nth-child(2) {
+      background: var(--gold);
+    }
+
+    .dots i:nth-child(3) {
+      background: var(--green-2);
+    }
+
+    .message {
+      width: fit-content;
+      max-width: 94%;
+      margin-top: 10px;
+      padding: 11px 12px;
+      border-radius: 7px;
+      background: #f1eee7;
+      color: #2d2924;
+      font-size: 13px;
+      line-height: 1.52;
+    }
+
+    .message.ai {
+      margin-left: auto;
+      background: var(--green);
+      color: var(--white);
+    }
+
+    .typing {
+      display: inline-block;
+      max-width: 100%;
+      border-right: 2px solid rgba(255, 255, 255, 0.85);
+      white-space: nowrap;
+      animation: caret 0.8s step-end infinite, glowText 2.8s ease-in-out infinite;
+    }
+
+    .skill-card {
+      top: 178px;
+      right: 0;
+      width: 300px;
+      padding: 18px;
+      animation: floatCard 7.2s ease-in-out infinite 0.4s;
+    }
+
+    .skill-chip {
+      display: inline-flex;
+      margin-bottom: 12px;
+      padding: 7px 9px;
+      border: 1px solid rgba(184, 135, 50, 0.32);
+      border-radius: 5px;
+      background: rgba(184, 135, 50, 0.09);
+      color: #7a5318;
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .terminal {
+      padding: 13px;
+      border-radius: 6px;
+      background: #17241f;
+      color: #d4eadb;
+      font-family: "SFMono-Regular", Consolas, monospace;
+      font-size: 12px;
+      line-height: 1.75;
+    }
+
+    .terminal span {
+      display: block;
+      opacity: 0;
+      animation: lineIn 7.2s linear infinite;
+    }
+
+    .terminal span:nth-child(2) {
+      animation-delay: 1.2s;
+    }
+
+    .terminal span:nth-child(3) {
+      animation-delay: 2.4s;
+    }
+
+    .terminal span:nth-child(4) {
+      animation-delay: 3.6s;
+    }
+
+    .phone {
+      z-index: 2;
+      right: 0;
+      bottom: 26px;
+      width: 220px;
+      padding: 12px;
+      border-radius: 30px;
+      background: #121410;
+      box-shadow: 0 30px 80px rgba(0, 0, 0, 0.26);
+      animation: floatCard 6.8s ease-in-out infinite 0.8s;
+    }
+
+    .phone-screen {
+      min-height: 438px;
+      padding: 18px 14px;
+      border-radius: 22px;
+      background:
+        linear-gradient(180deg, #fbfaf7 0%, #f2ede2 100%);
+      overflow: hidden;
+    }
+
+    .phone-title {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 13px;
+      font-weight: 840;
+    }
+
+    .garment {
+      position: relative;
+      width: 130px;
+      height: 168px;
+      margin: 22px auto;
+      border-radius: 48px 48px 14px 14px;
+      background: linear-gradient(135deg, #283b34, #17231f);
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,0.08);
+    }
+
+    .garment::before,
+    .garment::after {
+      position: absolute;
+      top: 20px;
+      width: 42px;
+      height: 84px;
+      content: "";
+      border: 1px solid rgba(244, 235, 214, 0.46);
+    }
+
+    .garment::before {
+      left: 26px;
+      transform: skew(-18deg);
+      border-right: 0;
+    }
+
+    .garment::after {
+      right: 26px;
+      transform: skew(18deg);
+      border-left: 0;
+    }
+
+    .mini-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 10px;
+      padding: 11px;
+      border-radius: 7px;
+      background: rgba(255, 255, 255, 0.86);
+      font-size: 12px;
+    }
+
+    .mini-row strong {
+      color: var(--green);
+    }
+
+    .db-card {
+      z-index: 3;
+      left: 28px;
+      bottom: 78px;
+      width: 330px;
+      padding: 18px;
+      animation: floatCard 7s ease-in-out infinite 1s;
+    }
+
+    .db-grid {
+      display: grid;
+      gap: 8px;
+    }
+
+    .db-row {
+      display: grid;
+      grid-template-columns: 82px 1fr 54px;
+      gap: 8px;
+      align-items: center;
+      padding: 9px 10px;
+      border-radius: 6px;
+      background: #f6f3ed;
+      color: #403b34;
+      font-size: 12px;
+    }
+
+    .status {
+      color: var(--green);
+      font-weight: 820;
+    }
+
+    .flow-line {
+      position: absolute;
+      height: 2px;
+      transform-origin: left center;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+      opacity: 0.76;
+      animation: pulseLine 2.8s ease-in-out infinite;
+    }
+
+    .line-a {
+      top: 185px;
+      left: 360px;
+      width: 190px;
+      transform: rotate(18deg);
+    }
+
+    .line-b {
+      top: 390px;
+      left: 320px;
+      width: 255px;
+      transform: rotate(31deg);
+      animation-delay: 0.4s;
+    }
+
+    .line-c {
+      top: 520px;
+      left: 220px;
+      width: 230px;
+      transform: rotate(-18deg);
+      animation-delay: 0.8s;
+    }
+
+    section {
+      padding: 92px clamp(20px, 5vw, 76px);
+    }
+
+    .section-head {
+      display: grid;
+      grid-template-columns: minmax(0, 0.66fr) minmax(260px, 0.34fr);
+      gap: 32px;
+      align-items: end;
+      margin-bottom: 34px;
+    }
+
+    .eyeline {
+      margin: 0 0 12px;
+      color: var(--gold);
+      font-size: 13px;
+      font-weight: 820;
+    }
+
+    h2 {
+      margin: 0;
+      font-size: clamp(32px, 4.5vw, 62px);
+      line-height: 1.08;
+      letter-spacing: 0;
+    }
+
+    .section-desc {
+      margin: 0;
+      color: var(--muted);
+      font-size: 16px;
+      line-height: 1.75;
+    }
+
+    .workflow {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .work-card {
+      position: relative;
+      min-height: 420px;
+      padding: 22px;
+      border: 1px solid rgba(20, 61, 51, 0.16);
+      border-radius: var(--radius);
+      background: rgba(255, 255, 255, 0.78);
+      overflow: hidden;
+      box-shadow: 0 16px 44px rgba(29, 25, 18, 0.07);
+    }
+
+    .work-card::after {
+      position: absolute;
+      right: -60px;
+      bottom: -80px;
+      width: 190px;
+      height: 190px;
+      content: "";
+      border: 1px solid rgba(184, 135, 50, 0.28);
+      border-radius: 50%;
+    }
+
+    .num {
+      color: var(--green);
+      font-size: 13px;
+      font-weight: 850;
+    }
+
+    .work-card h3 {
+      margin: 16px 0 12px;
+      font-size: 24px;
+      line-height: 1.18;
+    }
+
+    .work-card p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.68;
+    }
+
+    .source-list,
+    .api-list {
+      display: grid;
+      gap: 9px;
+      margin-top: 26px;
+    }
+
+    .source,
+    .api {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      min-height: 44px;
+      padding: 9px 10px;
+      border-radius: 6px;
+      background: #f5f1e9;
+      color: #3d3931;
+      font-size: 13px;
+    }
+
+    .source i,
+    .api i {
+      width: 8px;
+      height: 8px;
+      border-radius: 99px;
+      background: var(--gold);
+      animation: blink 1.8s ease-in-out infinite;
+    }
+
+    .mini-phone {
+      margin: 24px auto 0;
+      width: min(220px, 100%);
+      padding: 10px;
+      border-radius: 28px;
+      background: #161815;
+    }
+
+    .mini-phone .phone-screen {
+      min-height: 300px;
+    }
+
+    .ops-window {
+      margin-top: 24px;
+      border-radius: 8px;
+      background: #15211d;
+      color: #e5f1e7;
+      overflow: hidden;
+      font-family: "SFMono-Regular", Consolas, monospace;
+      font-size: 12px;
+    }
+
+    .ops-window div {
+      padding: 12px 13px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .ops-window b {
+      color: #f2c56f;
+      font-weight: 700;
+    }
+
+    .story {
+      background: #ffffff;
+    }
+
+    .story-grid {
+      display: grid;
+      grid-template-columns: minmax(320px, 0.48fr) minmax(0, 0.52fr);
+      gap: clamp(24px, 5vw, 64px);
+      align-items: center;
+    }
+
+    .case-visual {
+      display: block;
+      width: 100%;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+
+    .impact-list {
+      display: grid;
+      gap: 16px;
+    }
+
+    .impact {
+      display: grid;
+      grid-template-columns: 42px 1fr;
+      gap: 16px;
+      align-items: start;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .impact:last-child {
+      border-bottom: 0;
+    }
+
+    .impact-icon {
+      display: grid;
+      width: 42px;
+      height: 42px;
+      place-items: center;
+      border-radius: 7px;
+      background: var(--green);
+      color: var(--white);
+      font-weight: 850;
+    }
+
+    .impact h3 {
+      margin: 0 0 7px;
+      font-size: 19px;
+    }
+
+    .impact p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.68;
+    }
+
+    .resume {
+      display: grid;
+      grid-template-columns: minmax(0, 0.8fr) minmax(280px, 0.2fr);
+      gap: 24px;
+      align-items: stretch;
+      background: var(--green);
+      color: var(--white);
+    }
+
+    .resume h2 {
+      max-width: 860px;
+    }
+
+    .resume p {
+      max-width: 820px;
+      margin: 24px 0 0;
+      color: rgba(255, 255, 255, 0.76);
+      font-size: 17px;
+      line-height: 1.82;
+    }
+
+    .stack {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 30px;
+    }
+
+    .stack span {
+      padding: 9px 11px;
+      border: 1px solid rgba(255, 255, 255, 0.22);
+      border-radius: 5px;
+      background: rgba(255, 255, 255, 0.08);
+      color: rgba(255, 255, 255, 0.86);
+      font-size: 13px;
+      font-weight: 720;
+    }
+
+    .quote-panel {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      min-height: 310px;
+      padding: 22px;
+      border: 1px solid rgba(255, 255, 255, 0.22);
+      border-radius: var(--radius);
+      background: rgba(255, 255, 255, 0.08);
+    }
+
+    .quote-panel strong {
+      color: #f0c977;
+      font-size: 44px;
+      line-height: 1;
+    }
+
+    .quote-panel span {
+      color: rgba(255, 255, 255, 0.8);
+      line-height: 1.7;
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(22px);
+      transition: opacity 0.72s ease, transform 0.72s ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @keyframes breathe {
+      50% {
+        transform: rotate(-6deg) scale(1.02);
+      }
+    }
+
+    @keyframes floatCard {
+      50% {
+        transform: translateY(-12px);
+      }
+    }
+
+    @keyframes caret {
+      50% {
+        border-color: transparent;
+      }
+    }
+
+    @keyframes glowText {
+      50% {
+        filter: brightness(1.18);
+      }
+    }
+
+    @keyframes lineIn {
+      0%,
+      14% {
+        opacity: 0;
+        transform: translateY(4px);
+      }
+      22%,
+      82% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+      100% {
+        opacity: 0;
+      }
+    }
+
+    @keyframes pulseLine {
+      50% {
+        opacity: 1;
+        filter: brightness(1.3);
+      }
+    }
+
+    @keyframes blink {
+      50% {
+        opacity: 0.35;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        scroll-behavior: auto !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+
+    @media (max-width: 1040px) {
+      .hero {
+        grid-template-columns: 1fr;
+        min-height: auto;
+      }
+
+      .hero-stage {
+        min-height: 620px;
+      }
+
+      .workflow,
+      .story-grid,
+      .resume,
+      .section-head {
+        grid-template-columns: 1fr;
+      }
+
+      .nav {
+        display: none;
+      }
+    }
+
+    @media (max-width: 680px) {
+      .topbar {
+        padding: 14px 18px;
+      }
+
+      .brand {
+        font-size: 14px;
+      }
+
+      .hero,
+      section {
+        padding-left: 18px;
+        padding-right: 18px;
+      }
+
+      .hero {
+        padding-top: 94px;
+      }
+
+      .lead {
+        font-size: 16px;
+      }
+
+      .proof-strip {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-stage {
+        min-height: 760px;
+      }
+
+      .chat-card,
+      .skill-card,
+      .db-card,
+      .phone {
+        position: relative;
+        top: auto;
+        right: auto;
+        bottom: auto;
+        left: auto;
+        width: 100%;
+        margin-top: 16px;
+      }
+
+      .phone {
+        max-width: 250px;
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      .flow-line,
+      .orbit {
+        display: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="#top" aria-label="回到顶部">
+      <span class="brand-mark">77</span>
+      <span>AI Textile Case</span>
+    </a>
+    <nav class="nav" aria-label="页面导航">
+      <a href="#workflow">三层闭环</a>
+      <a href="#story">案例价值</a>
+      <a href="#deliverables">项目交付</a>
+    </nav>
+  </header>
+
+  <main id="top">
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="hero-copy">
+        <div class="case-index">AI 落地案例 / 纺织服装行业</div>
+        <h1 id="hero-title">AI × 高端男装定制</h1>
+        <p class="lead">
+          围绕高端私人定制场景，我完成了从行业趋势采集、微信小程序产品化，到 PostgreSQL 业务运维 Skill 的端到端实践，把 AI 从“聊天能力”推进到可执行的行业工作流。
+        </p>
+        <div class="hero-actions">
+          <a class="button" href="#workflow">查看落地链路</a>
+          <a class="button secondary" href="#deliverables">查看交付物</a>
+        </div>
+        <div class="proof-strip" aria-label="案例亮点">
+          <div class="proof">
+            <strong>3</strong>
+            <span>行业实践方向：趋势研究、用户产品、后台运维</span>
+          </div>
+          <div class="proof">
+            <strong>8+</strong>
+            <span>业务模块：身材档案、风格偏好、推荐、定制、订单等</span>
+          </div>
+          <div class="proof">
+            <strong>1</strong>
+            <span>从数据到业务动作的 AI 闭环案例</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="hero-stage" aria-label="AI 工作流动画演示">
+        <div class="orbit"></div>
+        <div class="flow-line line-a"></div>
+        <div class="flow-line line-b"></div>
+        <div class="flow-line line-c"></div>
+
+        <article class="stage-card chat-card">
+          <div class="card-head">
+            <span>Codex Conversation</span>
+            <span class="dots"><i></i><i></i><i></i></span>
+          </div>
+          <div class="message">帮我查最近两周高端男装趋势。</div>
+          <div class="message ai"><span class="typing">调用 menswear-trend-research</span></div>
+          <div class="message">把结果转成设计师能用的报告。</div>
+        </article>
+
+        <article class="stage-card skill-card">
+          <span class="skill-chip">$ menswear-trend-research</span>
+          <div class="terminal" aria-label="Skill 执行日志">
+            <span>crawl: Vogue Runway / GQ / Hypebeast</span>
+            <span>crawl: 中国国际时装周 / Ontimeshow</span>
+            <span>parse: silhouettes, fabrics, color</span>
+            <span>report: 8-12 cases + product ideas</span>
+          </div>
+        </article>
+
+        <article class="stage-card db-card">
+          <div class="card-head">
+            <span>$ tailor-pg-ops</span>
+            <span class="status">read-only</span>
+          </div>
+          <div class="db-grid">
+            <div class="db-row"><span>users</span><span>客户身份</span><b>OK</b></div>
+            <div class="db-row"><span>orders</span><span>订单状态</span><b>OK</b></div>
+            <div class="db-row"><span>profile</span><span>身材画像</span><b>OK</b></div>
+            <div class="db-row"><span>booking</span><span>顾问预约</span><b>OK</b></div>
+          </div>
+        </article>
+
+        <article class="phone" aria-label="微信小程序界面预览">
+          <div class="phone-screen">
+            <div class="phone-title">
+              <span>私人定制</span>
+              <span>AI</span>
+            </div>
+            <div class="garment"></div>
+            <div class="mini-row"><span>身材档案</span><strong>86%</strong></div>
+            <div class="mini-row"><span>风格偏好</span><strong>Old Money</strong></div>
+            <div class="mini-row"><span>推荐方案</span><strong>3 套</strong></div>
+            <div class="mini-row"><span>预计价格</span><strong>¥4740</strong></div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section id="workflow" aria-labelledby="workflow-title">
+      <div class="section-head reveal">
+        <div>
+          <p class="eyeline">End-to-End Workflow</p>
+          <h2 id="workflow-title">不是单点 Demo，而是一条行业业务链路。</h2>
+        </div>
+        <p class="section-desc">
+          三个实践分别解决“看见趋势”“承接用户”“管理业务”的问题，组合后形成从行业知识到真实订单数据的 AI 落地样板。
+        </p>
+      </div>
+
+      <div class="workflow">
+        <article class="work-card reveal">
+          <span class="num">01 / Trend Skill</span>
+          <h3>行业数据爬取与趋势报告</h3>
+          <p>
+            开发高端男装趋势研究 Skill，面向设计老师、品牌设计师和买手角色，将分散的秀场、媒体与展会信息转化成可复用的设计洞察。
+          </p>
+          <div class="source-list">
+            <div class="source"><span>Vogue Runway</span><i></i></div>
+            <div class="source"><span>GQ / Hypebeast</span><i></i></div>
+            <div class="source"><span>中国国际时装周</span><i></i></div>
+            <div class="source"><span>Ontimeshow</span><i></i></div>
+          </div>
+        </article>
+
+        <article class="work-card reveal">
+          <span class="num">02 / Mini Program</span>
+          <h3>微信小程序承接定制体验</h3>
+          <p>
+            构建高端私人定制小程序，把用户身材档案、风格偏好、AI 搭配推荐、定制工作台、价格计算和订单确认串成可操作流程。
+          </p>
+          <div class="mini-phone">
+            <div class="phone-screen">
+              <div class="phone-title"><span>定制工作台</span><span>¥4740</span></div>
+              <div class="garment"></div>
+              <div class="mini-row"><span>衣型</span><strong>大衣</strong></div>
+              <div class="mini-row"><span>毛料</span><strong>羊绒混纺</strong></div>
+            </div>
+          </div>
+        </article>
+
+        <article class="work-card reveal">
+          <span class="num">03 / Ops Skill</span>
+          <h3>数据库业务运维 Agent</h3>
+          <p>
+            开发 tailor-pg-ops Skill，将 PostgreSQL 查询和有限写操作封装为安全动作，支持运营人员通过自然语言查看用户、订单、画像与预约。
+          </p>
+          <div class="ops-window">
+            <div><b>action</b> recent-orders --limit 5</div>
+            <div><b>action</b> user-profile --phone ...</div>
+            <div><b>dry-run</b> update-order-status</div>
+            <div><b>guard</b> no unbounded update/delete</div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section id="story" class="story" aria-labelledby="story-title">
+      <div class="story-grid">
+        <img class="case-visual reveal" src="assets/ai-case/concept.png" alt="AI 高端男装定制案例视觉概念图" />
+        <div class="reveal">
+          <p class="eyeline">Business Value</p>
+          <h2 id="story-title">把 AI 变成行业工作台，而不是停留在问答。</h2>
+          <div class="impact-list">
+            <article class="impact">
+              <span class="impact-icon">研</span>
+              <div>
+                <h3>趋势研究自动化</h3>
+                <p>把资料采集、案例筛选、风格判断和商品转化建议沉淀为 Skill，使 AI 能按固定方法产出可复用报告。</p>
+              </div>
+            </article>
+            <article class="impact">
+              <span class="impact-icon">产</span>
+              <div>
+                <h3>服务流程产品化</h3>
+                <p>用小程序承接用户画像与定制动作，让传统顾问经验变成可交互、可记录、可继续优化的数字链路。</p>
+              </div>
+            </article>
+            <article class="impact">
+              <span class="impact-icon">运</span>
+              <div>
+                <h3>业务数据可运营</h3>
+                <p>用安全脚本和 Skill 规则控制数据库访问，既能提升后台查询效率，也保留生产系统需要的边界和审计意识。</p>
+              </div>
+            </article>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="deliverables" class="resume" aria-labelledby="deliverables-title">
+      <div class="reveal">
+        <p class="eyeline">Project Deliverables</p>
+        <h2 id="deliverables-title">从行业知识到业务系统的可复用沉淀。</h2>
+        <p>
+          本案例沉淀了三类可复用资产：面向设计研究的高端男装趋势 Skill，面向消费者体验的私人定制小程序 MVP，以及面向运营后台的 PostgreSQL 业务运维 Skill。三者共同覆盖资料采集、用户画像、方案推荐、定制选配、订单流转与后台查询，让 AI 能进入真实业务动作。
+        </p>
+        <div class="stack" aria-label="技术栈">
+          <span>Codex Skill</span>
+          <span>Python Crawler</span>
+          <span>Playwright</span>
+          <span>Markdown / JSON Report</span>
+          <span>WeChat Mini Program</span>
+          <span>TypeScript</span>
+          <span>SCSS</span>
+          <span>Node.js Cloud Function</span>
+          <span>PostgreSQL</span>
+          <span>Jest</span>
+        </div>
+      </div>
+      <aside class="quote-panel reveal">
+        <strong>AI</strong>
+        <span>
+          这个案例的重点不是“用了 AI”，而是把 AI 放进了行业信息、产品体验和后台运营三个真实位置。
+        </span>
+      </aside>
+    </section>
+  </main>
+
+  <script>
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.18 });
+
+    document.querySelectorAll('.reveal').forEach((el) => observer.observe(el));
+  </script>
+</body>
+</html>

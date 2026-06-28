@@ -1,0 +1,4 @@
+interface:
+  display_name: "Tailor PG Ops"
+  short_description: "Query and operate the 77-mvp PostgreSQL business data safely."
+  default_prompt: "Use the Tailor PG Ops skill to answer a PostgreSQL business-data request for this project."

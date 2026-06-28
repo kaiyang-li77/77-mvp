@@ -23,6 +23,77 @@
   border-radius: var(--radius);
   background: linear-gradient(180deg, #292524, #78716c);
   flex-shrink: 0;
+  position: relative;
+  overflow: hidden;
+}
+
+.look-art.navy {
+  background: linear-gradient(180deg, #172554, #334155);
+}
+
+.look-art.olive {
+  background: linear-gradient(180deg, #5f6f52, #78716c);
+}
+
+.look-garment {
+  position: absolute;
+  left: 28rpx;
+  top: 22rpx;
+  width: 84rpx;
+  height: 132rpx;
+}
+
+.look-coat-body {
+  position: absolute;
+  left: 10rpx;
+  top: 14rpx;
+  width: 64rpx;
+  height: 108rpx;
+  background: rgba(28, 25, 23, 0.94);
+  clip-path: polygon(28% 0, 72% 0, 88% 18%, 98% 94%, 78% 100%, 22% 100%, 2% 94%, 12% 18%);
+}
+
+.look-art.navy .look-coat-body {
+  background: #172554;
+}
+
+.look-art.olive .look-coat-body {
+  background: #5f6f52;
+}
+
+.look-coat-lapel {
+  position: absolute;
+  top: 16rpx;
+  width: 22rpx;
+  height: 34rpx;
+  background: #f5f5f4;
+}
+
+.look-coat-lapel.left {
+  left: 28rpx;
+  clip-path: polygon(0 0, 100% 0, 85% 100%);
+}
+
+.look-coat-lapel.right {
+  right: 28rpx;
+  clip-path: polygon(0 0, 100% 0, 15% 100%);
+}
+
+.look-coat-button {
+  position: absolute;
+  left: 40rpx;
+  width: 6rpx;
+  height: 6rpx;
+  border-radius: 999rpx;
+  background: var(--gold);
+}
+
+.look-coat-button.top {
+  top: 62rpx;
+}
+
+.look-coat-button.bottom {
+  top: 82rpx;
 }
 
 .look-info {

@@ -1,6 +1,10 @@
 const { query } = require('../config/db');
 const response = require('../utils/response');
 
+function toJsonb(value) {
+  return JSON.stringify(value || []);
+}
+
 async function handle(event, context, user) {
   const { method, body = {} } = event;
 
@@ -22,17 +26,17 @@ async function handle(event, context, user) {
     if (existing.length > 0) {
       const { rows } = await query(
         `UPDATE style_preferences
-         SET preferred_styles = $1, preferred_colors = $2, fit = $3, preferred_scenes = $4, updated_at = now()
+         SET preferred_styles = $1::jsonb, preferred_colors = $2::jsonb, fit = $3, preferred_scenes = $4::jsonb, updated_at = now()
          WHERE id = $5 RETURNING *`,
-        [preferred_styles || [], preferred_colors || [], fit, preferred_scenes || [], existing[0].id]
+        [toJsonb(preferred_styles), toJsonb(preferred_colors), fit, toJsonb(preferred_scenes), existing[0].id]
       );
       return response.success(rows[0]);
     }
 
     const { rows } = await query(
       `INSERT INTO style_preferences (user_id, preferred_styles, preferred_colors, fit, preferred_scenes)
-       VALUES ($1, $2, $3, $4, $5) RETURNING *`,
-      [user.id, preferred_styles || [], preferred_colors || [], fit, preferred_scenes || []]
+       VALUES ($1, $2::jsonb, $3::jsonb, $4, $5::jsonb) RETURNING *`,
+      [user.id, toJsonb(preferred_styles), toJsonb(preferred_colors), fit, toJsonb(preferred_scenes)]
     );
     return response.success(rows[0]);
   }

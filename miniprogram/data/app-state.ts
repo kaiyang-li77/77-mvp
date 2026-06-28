@@ -69,7 +69,7 @@ export async function calculatePrice(garment: string, fabric: string, details: s
   return res.price;
 }
 
-export async function createOrder(selection: CustomSelection): Promise<any> {
+export async function createOrder(selection: CustomSelection & { remark?: string }): Promise<any> {
   return call('POST', '/orders', selection);
 }
 

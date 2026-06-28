@@ -1,34 +1,83 @@
-import { getCustomSelection, createOrder, bookAdvisor, CustomSelection } from '../../data/app-state';
-import { brandProfile } from '../../data/mock-data';
+import { getBodyProfile, getCustomSelection, createOrder, bookAdvisor, CustomSelection, BodyProfile } from '../../data/app-state';
+import { brandProfile, customOptions } from '../../data/mock-data';
+
+function findName(list: Array<{ code: string; name: string }>, code: string) {
+  const item = list.find(option => option.code === code || option.name === code);
+  return item ? item.name : code || '-';
+}
+
+function detailNames(codes: string[]) {
+  return codes.map(code => findName(customOptions.details, code));
+}
+
+function displayPrice(value: number) {
+  if (!value) return '0';
+  const yuan = value >= 10000 ? value / 100 : value;
+  return Number.isInteger(yuan) ? String(yuan) : yuan.toFixed(2);
+}
+
+function profileText(profile: BodyProfile | null) {
+  if (!profile) return '-';
+  return `${profile.height}cm / ${profile.weight}kg / ${profile.body_type}`;
+}
 
 Page({
   data: {
     order: {} as any,
-    brand: brandProfile
+    brand: brandProfile,
+    remark: ''
   },
   async onLoad() {
     wx.showLoading({ title: '加载中' });
     try {
-      const selection = await getCustomSelection();
-      this.setData({ order: this.buildOrderSummary(selection) });
+      const [selection, profile] = await Promise.all([
+        getCustomSelection(),
+        getBodyProfile()
+      ]);
+      this.setData({ order: this.buildOrderSummary(selection, profile) });
     } catch (e) {
       wx.showToast({ title: (e as Error).message, icon: 'none' });
     } finally {
       wx.hideLoading();
     }
   },
-  buildOrderSummary(selection: CustomSelection | null) {
+  buildOrderSummary(selection: CustomSelection | null, profile: BodyProfile | null) {
     if (!selection) {
-      return { items: [], total: 0 };
+      return {
+        garment: '-',
+        fabric: '-',
+        color: '-',
+        fit: '-',
+        details: [],
+        detailsText: '-',
+        profile: profile || null,
+        profileText: profileText(profile),
+        price: 0,
+        priceText: '0',
+        deposit: 0,
+        depositText: '0'
+      };
     }
-    const items = [
-      { label: '品类', value: selection.garment_code },
-      { label: '面料', value: selection.fabric_code },
-      { label: '颜色', value: selection.color_code },
-      { label: '版型', value: selection.fit },
-      { label: '细节', value: selection.detail_codes.join('、') || '无' }
-    ];
-    return { items, total: selection.calculated_price };
+    const price = selection.calculated_price || 0;
+    const deposit = Math.round(price * 0.31);
+    const details = detailNames(selection.detail_codes || []);
+    return {
+      garment: findName(customOptions.garmentTypes, selection.garment_code),
+      fabric: findName(customOptions.fabrics, selection.fabric_code),
+      color: findName(customOptions.colors, selection.color_code),
+      fit: selection.fit || '-',
+      details,
+      detailsText: details.join(' / ') || '-',
+      profile: profile || null,
+      profileText: profileText(profile),
+      price,
+      priceText: displayPrice(price),
+      deposit,
+      depositText: displayPrice(deposit)
+    };
+  },
+  onRemarkInput(e: WechatMiniprogram.Input) {
+    this.setData({ remark: e.detail.value });
   },
   async confirm() {
     wx.showLoading({ title: '提交中' });
@@ -38,7 +87,7 @@ Page({
         wx.showToast({ title: '请先完成定制', icon: 'none' });
         return;
       }
-      await createOrder(selection);
+      await createOrder({ ...selection, remark: this.data.remark.trim() });
       wx.showModal({
         title: '模拟下单成功',
         content: '顾问将在 24 小时内联系你确认尺寸与面料。',
